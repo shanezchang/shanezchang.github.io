@@ -1,0 +1,178 @@
+---
+import type { ExperienceEntry } from '../data/resume';
+
+interface Props {
+  entry: ExperienceEntry;
+  isLast?: boolean;
+}
+
+const { entry, isLast = false } = Astro.props;
+---
+
+<div class:list={['timeline-item', { 'is-last': isLast }]}>
+  <div class="timeline-marker">
+    <div class="dot"></div>
+    {!isLast && <div class="line"></div>}
+  </div>
+  <div class="timeline-content">
+    <div class="exp-header">
+      <div class="exp-title">
+        {entry.companyLogo && <img src={entry.companyLogo} alt={entry.company} class="company-logo">}
+        <span class="company">{entry.company}</span>
+        <span class="role">{entry.role}</span>
+      </div>
+      <span class="date">{entry.date}</span>
+    </div>
+    <div class="exp-tags">
+      {entry.tags.map(tag => <span class="tag">{tag}</span>)}
+    </div>
+    <p class="exp-project">{entry.project}</p>
+    <ul class="exp-detail">
+      {entry.details.map(detail => <li>{detail}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 16px;
+    padding-top: 4px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #2c2c2c;
+    background: #fff;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-item:first-child .dot {
+    background: #2c2c2c;
+  }
+
+  .line {
+    width: 1.5px;
+    flex: 1;
+    background: #ddd;
+    margin-top: 4px;
+  }
+
+  .timeline-content {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 32px;
+  }
+
+  .is-last .timeline-content {
+    padding-bottom: 0;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .company { font-size: 15px; font-weight: 600; }
+
+  .company-logo {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px;
+    position: relative;
+    top: -1px;
+  }
+
+  .role {
+    font-size: 13px;
+    color: #888;
+    margin-left: 12px;
+    font-weight: 400;
+    border: 1px solid #ddd;
+    padding: 1px 10px;
+    border-radius: 3px;
+  }
+
+  .date {
+    font-size: 13px;
+    color: #999;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    font-size: 12px;
+    color: #555;
+    background: #f4f4f5;
+    border: 1px solid #e5e5e5;
+    padding: 3px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .exp-project {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+
+  .exp-detail {
+    font-size: 13.5px;
+    color: #444;
+    padding-left: 18px;
+    list-style: none;
+  }
+
+  .exp-detail li {
+    position: relative;
+    margin-bottom: 6px;
+    line-height: 1.8;
+  }
+
+  .exp-detail li::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    background: #bbb;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 640px) {
+    .timeline-item { gap: 14px; }
+    .exp-header { flex-direction: column; }
+  }
+
+  @media print {
+    .timeline-content { padding-bottom: 24px; }
+  }
+</style>

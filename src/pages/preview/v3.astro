@@ -1,0 +1,513 @@
+---
+// V3 — Aurora. Dim charcoal with a slowly drifting aurora gradient. Glass cards with cursor-tracked glow.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shane Chang — Aurora</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080c;
+      --bg-elev: #0d0f15;
+      --bg-elev-2: #14171f;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hi: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.07);
+      --border-hi: rgba(255,255,255,0.16);
+      --text: #ededf2;
+      --text-soft: #a8a8b8;
+      --text-mute: #5e5e6e;
+      --accent: #ff7e5c;
+      --accent-2: #c2a8ff;
+      --accent-3: #5cc8ff;
+      --sans: 'Sora', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: transparent;
+    }
+
+    /* Aurora background */
+    .aurora {
+      position: fixed;
+      inset: -10% -10%;
+      z-index: -2;
+      filter: blur(120px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .aurora .blob {
+      position: absolute;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+    }
+
+    .aurora .blob-1 {
+      width: 40%; height: 40%;
+      top: -10%; left: 0;
+      background: var(--accent);
+      animation: drift-1 22s ease-in-out infinite;
+    }
+    .aurora .blob-2 {
+      width: 35%; height: 45%;
+      top: -5%; right: -5%;
+      background: var(--accent-2);
+      animation: drift-2 28s ease-in-out infinite;
+      opacity: 0.7;
+    }
+    .aurora .blob-3 {
+      width: 45%; height: 35%;
+      bottom: 10%; left: 30%;
+      background: var(--accent-3);
+      animation: drift-3 35s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    /* Vignette to keep content readable */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 50% 60%, transparent 0%, rgba(7,8,12,0.6) 70%, rgba(7,8,12,0.85) 100%);
+      pointer-events: none;
+    }
+
+    @keyframes drift-1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(8%, 12%) scale(1.1); }
+      66% { transform: translate(-6%, 8%) scale(0.95); }
+    }
+    @keyframes drift-2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-10%, 8%) scale(1.05); }
+      66% { transform: translate(6%, -8%) scale(1.1); }
+    }
+    @keyframes drift-3 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(10%, -10%); }
+    }
+
+    /* Subtle noise overlay for grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+      position: relative;
+    }
+
+    /* Top bar */
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-soft);
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .pill .status {
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .top-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-meta .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-hi);
+      box-shadow: 0 4px 12px -4px rgba(255,126,92,0.25);
+    }
+
+    /* Hero portrait variant — large form */
+    .hero-portrait {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-hi);
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px -8px rgba(255,126,92,0.3);
+    }
+
+    /* Hero */
+    .hero { margin-bottom: 80px; max-width: 760px; }
+
+    .hero h1 {
+      font-weight: 600;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      margin-bottom: 28px;
+      background: linear-gradient(180deg, var(--text) 30%, rgba(237,237,242,0.6) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero .tagline {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    .hero .tagline strong {
+      font-weight: 500;
+      background: linear-gradient(120deg, var(--accent), #ffb37e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Quick actions */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      font-family: var(--sans);
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: 0 0 0 1px var(--text), 0 8px 24px -8px rgba(255,255,255,0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px var(--text), 0 12px 32px -8px rgba(255,255,255,0.3);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .btn-ghost:hover {
+      background: var(--surface-hi);
+      border-color: var(--border-hi);
+    }
+
+    /* Card grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 56px;
+    }
+
+    .card {
+      position: relative;
+      padding: 28px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.01));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255,126,92,0.10), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-hi);
+      background: linear-gradient(180deg, var(--surface-hi), rgba(255,255,255,0.02));
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card .title {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      letter-spacing: -0.015em;
+    }
+
+    .card .desc {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .card .arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      color: var(--text-mute);
+      transition: all 0.3s;
+      font-family: var(--mono);
+    }
+    .card:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+    /* Social rail */
+    .social-rail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .social-rail a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-rail a:hover {
+      background: var(--surface-hi);
+      color: var(--text);
+    }
+
+    .social-rail a img {
+      width: 14px; height: 14px;
+      filter: invert(1) brightness(0.8);
+    }
+
+    /* Footer */
+    .foot {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+    }
+
+    .foot a { color: var(--text-mute); text-decoration: none; transition: color 0.2s; }
+    .foot a:hover { color: var(--text); }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(16px); animation: rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+    .reveal:nth-of-type(1) { animation-delay: 0.05s; }
+    .reveal:nth-of-type(2) { animation-delay: 0.18s; }
+    .reveal:nth-of-type(3) { animation-delay: 0.32s; }
+    .reveal:nth-of-type(4) { animation-delay: 0.46s; }
+    .reveal:nth-of-type(5) { animation-delay: 0.6s; }
+
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 720px) {
+      .page { padding: 32px 20px 56px; }
+      .top { margin-bottom: 56px; }
+      .hero { margin-bottom: 56px; }
+      .hero h1 { font-size: clamp(40px, 13vw, 64px); }
+      .hero .tagline { font-size: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+      .foot { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <main class="page">
+    <header class="top">
+      <span class="pill reveal">
+        <span class="status"></span>
+        Available for select work
+      </span>
+      <span class="top-meta reveal">
+        <img class="avatar" src="https://picsum.photos/seed/sc-portrait/56/56" alt="" />
+        SC · 2026
+      </span>
+    </header>
+
+    <section class="hero reveal">
+      <h1>Shane Chang.</h1>
+      <p class="tagline">Software engineer based in Shenzhen. <strong>Backend systems</strong>, internal platforms, and the occasional quiet tool — four years in, half spent at Tencent.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/resume/en/">View resume <span>→</span></a>
+        <a class="btn btn-ghost" href="mailto:shane.z.chang@hotmail.com">Get in touch</a>
+      </div>
+    </section>
+
+    <section class="grid reveal">
+      <a class="card" href="/resume/en/">
+        <span class="label">↳ Document</span>
+        <div class="title">Resume — English</div>
+        <div class="desc">Four years across Tencent, supply chain, and an MCN agency.</div>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="card" href="/resume/zh/">
+        <span class="label">↳ 文档</span>
+        <div class="title">简历 — 中文</div>
+        <div class="desc">腾讯、跨境供应链、抖音 Agency — 四年工程经验。</div>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="card" href="https://blog.example.com" target="_blank">
+        <span class="label">↳ Writing</span>
+        <div class="title">Personal blog</div>
+        <div class="desc">Notes on backend, internal platforms, and craft.</div>
+        <span class="arrow">↗</span>
+      </a>
+      <a class="card" href="https://juejin.cn/user/shanezchang" target="_blank">
+        <span class="label">↳ 中文</span>
+        <div class="title">稀土掘金</div>
+        <div class="desc">中文技术文章与笔记同步。</div>
+        <span class="arrow">↗</span>
+      </a>
+    </section>
+
+    <section class="social-rail reveal">
+      <a href="https://github.com/shanezchang" target="_blank">
+        <img src="/assets/github.svg" alt=""> GitHub
+      </a>
+      <a href="https://linkedin.com/in/shanezchang" target="_blank">
+        <img src="/assets/linkedin.svg" alt=""> LinkedIn
+      </a>
+      <a href="https://x.com/shanezchang" target="_blank">
+        <img src="/assets/x.svg" alt=""> X
+      </a>
+      <a href="https://youtube.com/@shanezchang" target="_blank">
+        <img src="/assets/youtube.svg" alt=""> YouTube
+      </a>
+      <a href="https://instagram.com/shanezchang" target="_blank">
+        <img src="/assets/instagram.svg" alt=""> Instagram
+      </a>
+      <a href="https://space.bilibili.com/shanezchang" target="_blank">
+        <img src="/assets/bilibili.svg" alt=""> Bilibili
+      </a>
+      <a href="https://t.me/shanezchang" target="_blank">
+        <img src="/assets/telegram.svg" alt=""> Telegram
+      </a>
+    </section>
+
+    <footer class="foot reveal">
+      <span>// 22.54° N · Shenzhen</span>
+      <a href="mailto:shane.z.chang@hotmail.com">shane.z.chang@hotmail.com</a>
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('.card').forEach(c => {
+      c.addEventListener('mousemove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  </script>
+</body>
+</html>

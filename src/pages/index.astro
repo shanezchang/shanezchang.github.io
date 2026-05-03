@@ -1,0 +1,430 @@
+---
+// Personal landing page.
+// Sharp typographic minimalism, animated grid background, light/dark toggle.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shane Chang — software engineer based in Shenzhen. Backend systems, internal platforms, and quiet tools.">
+  <title>Shane Chang</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    // Set theme before paint to avoid FOUC.
+    (function () {
+      try {
+        const saved = localStorage.getItem('theme');
+        const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = saved || (dark ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+
+  <style>
+    /* ========== Theme tokens ========== */
+    :root {
+      --bg: #fafafa;
+      --bg-elev: #ffffff;
+      --ink: #0a0a0a;
+      --ink-soft: #525252;
+      --ink-mute: #a3a3a3;
+      --rule: #e8e8e8;
+      --rule-soft: #f0f0f0;
+      --accent: #0070f3;
+      --grid: rgba(0,0,0,0.04);
+    }
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --bg-elev: #111111;
+      --ink: #fafafa;
+      --ink-soft: #a3a3a3;
+      --ink-mute: #525252;
+      --rule: #1f1f1f;
+      --rule-soft: #141414;
+      --accent: #2a8cff;
+      --grid: rgba(255,255,255,0.04);
+    }
+
+    /* ========== Reset & base ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Geist', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: grid-drift 60s linear infinite;
+    }
+
+    @keyframes grid-drift {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 80px 80px, 80px 80px; }
+    }
+
+    .page { max-width: 980px; margin: 0 auto; padding: 32px 32px 80px; }
+
+    /* ========== Top nav ========== */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      margin-bottom: 96px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .logo .dot {
+      width: 8px; height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+      animation: ping 3s ease-in-out infinite;
+    }
+
+    @keyframes ping {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .nav-actions { display: flex; gap: 24px; align-items: center; }
+
+    .nav a {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--ink); }
+
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--rule);
+      background: var(--bg-elev);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-soft);
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--ink); color: var(--ink); }
+    .theme-toggle .moon { display: none; }
+    [data-theme="dark"] .theme-toggle .sun { display: none; }
+    [data-theme="dark"] .theme-toggle .moon { display: block; }
+
+    /* ========== Hero ========== */
+    .hero { margin-bottom: 96px; }
+
+    .hero .kicker {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-weight: 700;
+      font-size: clamp(64px, 14vw, 192px);
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      margin-bottom: 28px;
+    }
+
+    .hero .tagline {
+      font-family: 'Geist Mono', monospace;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 560px;
+    }
+    .hero .tagline .marker { color: var(--accent); font-weight: 500; }
+
+    /* ========== Sections (label : body grid) ========== */
+    .section {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section h2 {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+
+    .section .body { font-size: 15px; line-height: 1.7; color: var(--ink-soft); }
+    .section .body strong { color: var(--ink); font-weight: 500; }
+
+    /* Section label that stacks an email line below the h2 (used by Found at) */
+    .section-label { display: flex; flex-direction: column; gap: 8px; }
+
+    .contact-line {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .contact-line:hover { color: var(--accent); }
+
+    /* ========== Found at — pill social rail ========== */
+    .socials { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--bg-elev);
+      transition: all 0.2s;
+    }
+
+    .socials a img {
+      width: 13px;
+      height: 13px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    [data-theme="dark"] .socials a img { filter: invert(1); }
+
+    .socials a::after {
+      content: '↗';
+      color: var(--ink-mute);
+      transition: transform 0.2s, color 0.2s;
+      margin-left: 2px;
+    }
+
+    .socials a:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+    .socials a:hover img { opacity: 1; }
+    .socials a:hover::after { transform: translate(2px, -2px); color: var(--accent); }
+
+    /* ========== Selected work — image grid (used by the commented-out section below) ========== */
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    .work-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s;
+    }
+
+    .work-cover {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+      background: var(--bg-elev);
+    }
+
+    .work-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      filter: grayscale(0.4) contrast(1.05);
+    }
+
+    .work-card:hover .work-cover img { transform: scale(1.04); filter: grayscale(0) contrast(1.05); }
+
+    .work-cover::after {
+      content: '↗';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elev);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      opacity: 0;
+      transition: all 0.25s;
+    }
+    .work-card:hover .work-cover::after { opacity: 1; transform: translate(-2px, 2px); color: var(--accent); border-color: var(--accent); }
+
+    .work-meta { display: flex; flex-direction: column; gap: 4px; }
+    .work-title { font-size: 14px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+    .work-tags { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--ink-mute); letter-spacing: 0.02em; }
+
+    /* ========== Footer ========== */
+    .foot {
+      margin-top: 96px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+    }
+
+    .foot a {
+      color: var(--ink-mute);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .foot a:hover { color: var(--ink); }
+
+    /* ========== Reveal animation ========== */
+    .fade {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fade 0.8s ease-out forwards;
+    }
+    .fade:nth-of-type(1) { animation-delay: 0.05s; }
+    .fade:nth-of-type(2) { animation-delay: 0.16s; }
+    .fade:nth-of-type(3) { animation-delay: 0.28s; }
+    .fade:nth-of-type(4) { animation-delay: 0.40s; }
+    .fade:nth-of-type(5) { animation-delay: 0.52s; }
+
+    @keyframes fade { to { opacity: 1; transform: translateY(0); } }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 720px) {
+      .page { padding: 24px 20px 64px; }
+      .nav { margin-bottom: 56px; }
+      .hero { margin-bottom: 64px; }
+      .hero h1 { font-size: clamp(48px, 14vw, 96px); }
+      .section { grid-template-columns: 1fr; gap: 16px; padding: 24px 0; }
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      .foot { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- Top nav: logo · resume · connect · theme toggle -->
+    <nav class="nav fade">
+      <div class="logo">
+        <span class="dot"></span>
+        <span>shane-chang</span>
+      </div>
+      <div class="nav-actions">
+        <a href="/resume/">Resume</a>
+        <a href="#contact">Connect</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+          <svg class="sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero fade">
+      <p class="kicker">// shanezchang.io</p>
+      <h1>Shane Chang</h1>
+      <p class="tagline">Software engineer based in <span class="marker">Shenzhen</span>. Building <span class="marker">backend systems</span>, internal platforms, and the occasional quiet tool.</p>
+    </section>
+
+    <!-- Work summary -->
+    <section class="section fade">
+      <h2>Work</h2>
+      <div class="body">
+        <p>Backend systems · Internal platforms · Data pipelines · Algorithm engineering. Across Tencent, cross-border supply chain, and a Douyin agency.</p>
+      </div>
+    </section>
+
+    <!--
+      Selected work — uncomment when project images are ready.
+      Each card needs a 4:3 cover image. Suggested: WebP, ~1200x900.
+
+    <section class="section fade">
+      <h2>Selected work</h2>
+      <div class="work-grid">
+        <a class="work-card" href="#">
+          <div class="work-cover"><img src="/assets/work/example.webp" alt="" loading="lazy"></div>
+          <div class="work-meta">
+            <span class="work-title">Project name</span>
+            <span class="work-tags">2025 · stack · domain</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    -->
+
+    <!-- Found at — socials with email line under the section label -->
+    <section class="section fade" id="contact">
+      <div class="section-label">
+        <h2>Found at</h2>
+        <a class="contact-line" href="mailto:shane.z.chang@hotmail.com">shane.z.chang@hotmail.com</a>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/shanezchang" target="_blank"><img src="/assets/github.svg" alt=""> GitHub</a>
+        <a href="https://linkedin.com/in/shanezchang" target="_blank"><img src="/assets/linkedin.svg" alt=""> LinkedIn</a>
+        <a href="https://x.com/shanezchang" target="_blank"><img src="/assets/x.svg" alt=""> X</a>
+      </div>
+    </section>
+
+    <footer class="foot fade">
+      <span>// 2026</span>
+      <a href="mailto:shane.z.chang@hotmail.com">shane.z.chang@hotmail.com</a>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  </script>
+</body>
+</html>
