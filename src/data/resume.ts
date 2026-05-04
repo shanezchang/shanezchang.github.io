@@ -228,20 +228,21 @@ export const en: ResumeData = {
       tags: [
         { text: 'AI Agents', highlight: true },
         { text: 'People Discovery' },
-        { text: 'Supply Chain' },
-        { text: 'Big Data Content Detection' },
+        { text: 'Cross-border Supply Chain' },
+        { text: 'Internet Ad Monitoring' },
+        { text: 'Financial Compliance' },
       ],
     },
     {
       label: 'AI Engineering',
       tags: [
         { text: 'Multi-Agent Systems', highlight: true },
-        { text: 'Context Engineering', highlight: true },
         { text: 'Progressive Disclosure', highlight: true },
-        { text: 'Model Evaluation', highlight: true },
-        { text: 'Model Strategy', highlight: true },
         { text: 'Agent Reliability', highlight: true },
-        { text: 'AI Native', highlight: true },
+        { text: 'Context Engineering' },
+        { text: 'Model Evaluation' },
+        { text: 'Model Routing & Strategy' },
+        { text: 'AI Native' },
       ],
     },
     {
@@ -249,10 +250,11 @@ export const en: ResumeData = {
       tags: [
         { text: 'Python', highlight: true },
         { text: 'Java' },
+        { text: 'Go' },
       ],
     },
     {
-      label: 'Frameworks',
+      label: 'Frameworks & Infra',
       tags: [
         { text: 'LangChain' },
         { text: 'LangGraph' },
@@ -260,6 +262,7 @@ export const en: ResumeData = {
         { text: 'SpringBoot' },
         { text: 'SpringCloud' },
         { text: 'Kafka' },
+        { text: 'K8s' },
         { text: 'Redis' },
         { text: 'Hive' },
       ],
@@ -267,14 +270,19 @@ export const en: ResumeData = {
     {
       label: 'Engineering',
       tags: [
+        { text: 'Algorithm Engineering', highlight: true },
+        { text: 'Compliance Engineering', highlight: true },
         { text: 'System Architecture' },
-        { text: 'Algorithm Engineering' },
+        { text: 'Big Data Governance' },
+        { text: 'Distributed Transactions' },
       ],
     },
     {
       label: 'Work Style',
       tags: [
-        { text: '0-to-1 Builder' },
+        { text: '0-to-1 Builder', highlight: true },
+        { text: 'Platform-First', highlight: true },
+        { text: 'Fast Learner' },
         { text: 'Result-oriented' },
         { text: 'Self-driven' },
       ],
@@ -490,20 +498,21 @@ export const zh: ResumeData = {
       tags: [
         { text: 'AI Agent', highlight: true },
         { text: '找人 / People Discovery' },
-        { text: '供应链' },
-        { text: '大数据内容检测' },
+        { text: '跨境供应链' },
+        { text: '互联网广告监测' },
+        { text: '金融合规' },
       ],
     },
     {
       label: 'AI 工程能力',
       tags: [
         { text: '多 Agent 协作架构', highlight: true },
-        { text: '上下文工程', highlight: true },
         { text: '渐进式披露能力', highlight: true },
-        { text: '模型测评', highlight: true },
-        { text: '模型策略', highlight: true },
         { text: 'Agent 兜底机制', highlight: true },
-        { text: 'AI Native', highlight: true },
+        { text: '上下文工程' },
+        { text: '模型测评' },
+        { text: '模型路由与策略' },
+        { text: 'AI Native' },
       ],
     },
     {
@@ -511,6 +520,7 @@ export const zh: ResumeData = {
       tags: [
         { text: 'Python', highlight: true },
         { text: 'Java' },
+        { text: 'Go' },
       ],
     },
     {
@@ -522,6 +532,7 @@ export const zh: ResumeData = {
         { text: 'SpringBoot' },
         { text: 'SpringCloud' },
         { text: 'Kafka' },
+        { text: 'K8s' },
         { text: 'Redis' },
         { text: 'Hive' },
       ],
@@ -529,14 +540,19 @@ export const zh: ResumeData = {
     {
       label: '工程能力',
       tags: [
+        { text: '算法工程化', highlight: true },
+        { text: '合规级工程', highlight: true },
         { text: '系统架构设计' },
-        { text: '算法工程化' },
+        { text: '大数据治理' },
+        { text: '分布式事务' },
       ],
     },
     {
       label: '工作风格',
       tags: [
-        { text: '从 0 到 1 架构' },
+        { text: '从 0 到 1 架构', highlight: true },
+        { text: '平台思维', highlight: true },
+        { text: '快速学习' },
         { text: '结果导向' },
         { text: '独立解决问题' },
       ],

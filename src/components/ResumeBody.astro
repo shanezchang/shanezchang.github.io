@@ -2,7 +2,7 @@
 import type { ResumeData } from '../data/resume';
 import ExperienceItem from './ExperienceItem.astro';
 import StrengthGrid from './StrengthGrid.astro';
-import HighlightStack from './HighlightStack.astro';
+// import HighlightStack from './HighlightStack.astro'; // re-enable when restoring the Highlights block below
 import Icon from './Icon.astro';
 
 interface Props {
@@ -56,37 +56,6 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
 </section>
 
 <section class="section fade">
-  <h2>{data.sectionTitles.strengths}</h2>
-  <div class="body">
-    <StrengthGrid items={data.strengths} lang={lang} />
-  </div>
-</section>
-
-{data.highlights && data.highlights.length > 0 && (
-  <section class="section fade">
-    <h2>{data.sectionTitles.highlights}</h2>
-    <div class="body">
-      <HighlightStack items={data.highlights} lang={lang} />
-    </div>
-  </section>
-)}
-
-<section class="section fade">
-  <h2>{data.sectionTitles.experience}</h2>
-  <div class="body">
-    <div class="timeline">
-      {data.experience.map((entry, i) => (
-        <ExperienceItem
-          entry={entry}
-          isFirst={i === 0}
-          isLast={i === data.experience.length - 1}
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
-<section class="section fade">
   <h2>{data.sectionTitles.education}</h2>
   <div class="body">
     <div class="education">
@@ -100,6 +69,41 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
         {data.education.major && <p class="major">{data.education.major}</p>}
       </div>
       <span class="edu-date">{data.education.date}</span>
+    </div>
+  </div>
+</section>
+
+<section class="section fade">
+  <h2>{data.sectionTitles.strengths}</h2>
+  <div class="body">
+    <StrengthGrid items={data.strengths} lang={lang} />
+  </div>
+</section>
+
+{/*
+  Highlights section temporarily hidden by request. The data still lives in
+  resume.ts (`highlights` field) and the HighlightStack component is intact —
+  to re-enable, restore this block and re-import HighlightStack at the top.
+
+  <section class="section fade">
+    <h2>{data.sectionTitles.highlights}</h2>
+    <div class="body">
+      <HighlightStack items={data.highlights} lang={lang} />
+    </div>
+  </section>
+*/}
+
+<section class="section fade">
+  <h2>{data.sectionTitles.experience}</h2>
+  <div class="body">
+    <div class="timeline">
+      {data.experience.map((entry, i) => (
+        <ExperienceItem
+          entry={entry}
+          isFirst={i === 0}
+          isLast={i === data.experience.length - 1}
+        />
+      ))}
     </div>
   </div>
 </section>
