@@ -1,0 +1,13 @@
+---
+import ResumeLayout from '../../layouts/ResumeLayout.astro';
+import ResumeBody from '../../components/ResumeBody.astro';
+import { zh } from '../../data/resume';
+---
+
+<ResumeLayout
+  lang="zh"
+  title="简历 — 张帅"
+  description="张帅的简历 — 深圳软件工程师，专注后端系统、AI Agent 与内部平台。"
+>
+  <ResumeBody data={zh} lang="zh" />
+</ResumeLayout>

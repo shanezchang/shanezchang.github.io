@@ -1,15 +1,18 @@
 ---
 import type { ExperienceEntry } from '../data/resume';
+import Icon from './Icon.astro';
 
 interface Props {
   entry: ExperienceEntry;
+  isFirst?: boolean;
   isLast?: boolean;
 }
 
-const { entry, isLast = false } = Astro.props;
+const { entry, isFirst = false, isLast = false } = Astro.props;
+const hasMultipleProjects = entry.projects.length > 1;
 ---
 
-<div class:list={['timeline-item', { 'is-last': isLast }]}>
+<div class:list={['timeline-item', { 'is-first': isFirst, 'is-last': isLast }]}>
   <div class="timeline-marker">
     <div class="dot"></div>
     {!isLast && <div class="line"></div>}
@@ -17,162 +20,235 @@ const { entry, isLast = false } = Astro.props;
   <div class="timeline-content">
     <div class="exp-header">
       <div class="exp-title">
-        {entry.companyLogo && <img src={entry.companyLogo} alt={entry.company} class="company-logo">}
+        {entry.companyLogo && (
+          <img
+            src={entry.companyLogo}
+            alt={entry.company}
+            class:list={['company-logo', { 'is-mono': entry.monoLogo }]}
+          />
+        )}
         <span class="company">{entry.company}</span>
         <span class="role">{entry.role}</span>
       </div>
       <span class="date">{entry.date}</span>
     </div>
+
     <div class="exp-tags">
-      {entry.tags.map(tag => <span class="tag">{tag}</span>)}
+      {entry.tags.map((tag) => <span class="tag">{tag}</span>)}
     </div>
-    <p class="exp-project">{entry.project}</p>
-    <ul class="exp-detail">
-      {entry.details.map(detail => <li>{detail}</li>)}
-    </ul>
+
+    <div class:list={['projects', { 'has-many': hasMultipleProjects }]}>
+      {entry.projects.map((project) => (
+        <div class="project">
+          <div class="project-head">
+            <span class="project-name">{project.name}</span>
+            {project.url && (
+              <a
+                class="project-link"
+                href={project.url}
+                target="_blank"
+                rel="noopener"
+                aria-label={`Visit ${project.name}`}
+              >
+                <Icon name="arrow-up-right" size={12} />
+              </a>
+            )}
+          </div>
+          <ul class="project-detail">
+            {project.details.map((detail) => <li>{detail}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
   </div>
 </div>
 
 <style>
   .timeline-item {
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 22px;
+    padding-bottom: 36px;
     position: relative;
   }
+  .timeline-item.is-last { padding-bottom: 0; }
 
   .timeline-marker {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-shrink: 0;
-    width: 16px;
-    padding-top: 4px;
+    padding-top: 6px;
   }
 
   .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 2px solid #2c2c2c;
-    background: #fff;
+    border: 2px solid var(--ink-mute);
+    background: var(--bg);
     flex-shrink: 0;
-    position: relative;
     z-index: 1;
+    transition: all 0.3s;
   }
-
-  .timeline-item:first-child .dot {
-    background: #2c2c2c;
+  .timeline-item.is-first .dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
   }
 
   .line {
-    width: 1.5px;
+    width: 1px;
     flex: 1;
-    background: #ddd;
-    margin-top: 4px;
+    background: var(--rule);
+    margin-top: 6px;
   }
 
-  .timeline-content {
-    flex: 1;
-    min-width: 0;
-    padding-bottom: 32px;
-  }
-
-  .is-last .timeline-content {
-    padding-bottom: 0;
-  }
+  .timeline-content { min-width: 0; }
 
   .exp-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    align-items: baseline;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px 12px;
+    margin-bottom: 6px;
   }
-
-  .company { font-size: 15px; font-weight: 600; }
-
+  .exp-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .company {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
   .company-logo {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
-    vertical-align: middle;
-    margin-right: 6px;
-    position: relative;
-    top: -1px;
-  }
-
-  .role {
-    font-size: 13px;
-    color: #888;
-    margin-left: 12px;
-    font-weight: 400;
-    border: 1px solid #ddd;
-    padding: 1px 10px;
     border-radius: 3px;
+    flex-shrink: 0;
   }
-
+  :global([data-theme="dark"]) .company-logo.is-mono {
+    filter: invert(1) brightness(1.05);
+  }
+  .role {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-elev);
+    letter-spacing: 0.02em;
+  }
   .date {
-    font-size: 13px;
-    color: #999;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   .exp-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 16px;
   }
-
   .tag {
-    font-size: 12px;
-    color: #555;
-    background: #f4f4f5;
-    border: 1px solid #e5e5e5;
-    padding: 3px 12px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 3px 9px;
     border-radius: 4px;
     white-space: nowrap;
+    letter-spacing: 0.01em;
   }
 
-  .exp-project {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-    font-style: italic;
+  /* Projects: each one rendered as a labeled block. When a company has many,
+     blocks get a stronger separator so the eye can chunk them. */
+  .projects { display: flex; flex-direction: column; gap: 14px; }
+  .projects.has-many .project + .project {
+    padding-top: 14px;
+    border-top: 1px dashed var(--rule);
   }
 
-  .exp-detail {
+  .project-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .project-name {
     font-size: 13.5px;
-    color: #444;
-    padding-left: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    font-style: italic;
+    letter-spacing: -0.005em;
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    color: var(--ink-mute);
+    background: var(--bg-elev);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .project-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translate(1px, -1px);
+  }
+
+  .project-detail {
     list-style: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-soft);
   }
-
-  .exp-detail li {
+  .project-detail li {
     position: relative;
-    margin-bottom: 6px;
-    line-height: 1.8;
+    padding-left: 16px;
+    margin-bottom: 8px;
   }
-
-  .exp-detail li::before {
+  .project-detail li:last-child { margin-bottom: 0; }
+  .project-detail li::before {
     content: '';
     position: absolute;
-    left: -14px;
+    left: 0;
     top: 11px;
-    width: 5px;
-    height: 5px;
-    background: #bbb;
+    width: 4px;
+    height: 4px;
+    background: var(--ink-mute);
     border-radius: 50%;
   }
 
-  @media (max-width: 640px) {
-    .timeline-item { gap: 14px; }
-    .exp-header { flex-direction: column; }
+  @media (max-width: 720px) {
+    .timeline-item { gap: 14px; padding-bottom: 28px; }
+    .exp-header { gap: 4px; }
+    .date { font-size: 11px; }
   }
 
   @media print {
-    .timeline-content { padding-bottom: 24px; }
+    .dot { background: #111 !important; border-color: #111 !important; box-shadow: none !important; }
+    .line { background: #aaa !important; }
+    .tag, .role { background: transparent !important; color: #333 !important; border-color: #aaa !important; }
+    .project-detail li::before { background: #555 !important; }
+    .project-link { background: transparent !important; border-color: #aaa !important; color: #555 !important; }
+    .timeline-item { padding-bottom: 18px; }
+    .projects.has-many .project + .project { border-top-color: #ccc !important; }
   }
 </style>

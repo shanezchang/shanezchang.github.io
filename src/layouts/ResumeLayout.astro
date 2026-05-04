@@ -1,0 +1,322 @@
+---
+// Shared chrome for the resume pages: head, fonts, theme tokens, nav, grid bg, footer.
+// Mirrors the design tokens in src/pages/index.astro so the resume reads as a
+// second-floor of the same site rather than a separate page.
+
+interface Props {
+  lang: 'en' | 'zh';
+  title: string;
+  description?: string;
+}
+
+const { lang, title, description } = Astro.props;
+
+const otherLang = lang === 'en' ? 'zh' : 'en';
+const otherLangLabel = lang === 'en' ? '中文' : 'EN';
+const otherLangHref = `/resume/${otherLang}/`;
+
+const navLabels = lang === 'en'
+  ? { home: 'Home', resume: 'Resume' }
+  : { home: '首页', resume: '简历' };
+
+const footerYear = new Date().getFullYear();
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {description && <meta name="description" content={description} />}
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script is:inline>
+    // Set theme before paint to avoid FOUC.
+    (function () {
+      try {
+        const saved = localStorage.getItem('theme');
+        const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = saved || (dark ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+
+  <style is:global>
+    /* ========== Theme tokens (shared with landing) ========== */
+    :root {
+      --bg: #fafafa;
+      --bg-elev: #ffffff;
+      --ink: #0a0a0a;
+      --ink-soft: #525252;
+      --ink-mute: #a3a3a3;
+      --rule: #e8e8e8;
+      --rule-soft: #f0f0f0;
+      --accent: #0070f3;
+      --grid: rgba(0,0,0,0.04);
+      --accent-glow: rgba(0,112,243,0.18);
+    }
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --bg-elev: #111111;
+      --ink: #fafafa;
+      --ink-soft: #a3a3a3;
+      --ink-mute: #525252;
+      --rule: #1f1f1f;
+      --rule-soft: #141414;
+      --accent: #2a8cff;
+      --grid: rgba(255,255,255,0.04);
+      --accent-glow: rgba(42,140,255,0.22);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Geist', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    html[lang="zh"] body { letter-spacing: 0.01em; }
+
+    body {
+      min-height: 100vh;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: grid-drift 60s linear infinite;
+    }
+
+    @keyframes grid-drift {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 80px 80px, 80px 80px; }
+    }
+
+    .page { max-width: 980px; margin: 0 auto; padding: 32px 32px 80px; }
+
+    /* ========== Top nav ========== */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      margin-bottom: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .logo .dot {
+      width: 8px; height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+      animation: ping 3s ease-in-out infinite;
+    }
+    @keyframes ping {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .nav-actions { display: flex; gap: 24px; align-items: center; }
+    .nav a {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--ink); }
+    .nav .lang-switch {
+      color: var(--ink-mute);
+      border: 1px solid var(--rule);
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-elev);
+      transition: all 0.2s;
+    }
+    .nav .lang-switch:hover { color: var(--ink); border-color: var(--ink); }
+
+    .theme-toggle {
+      width: 32px; height: 32px;
+      border: 1px solid var(--rule);
+      background: var(--bg-elev);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-soft);
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--ink); color: var(--ink); }
+    .theme-toggle .moon { display: none; }
+    [data-theme="dark"] .theme-toggle .sun { display: none; }
+    [data-theme="dark"] .theme-toggle .moon { display: block; }
+
+    /* ========== Resume hero ========== */
+    .resume-hero { margin-bottom: 64px; }
+    .resume-hero .kicker {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .resume-hero h1 {
+      font-weight: 700;
+      font-size: clamp(48px, 9vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+    .resume-hero .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+    }
+    .resume-hero .meta span { position: relative; }
+    .resume-hero .meta span + span::before {
+      content: '·';
+      position: absolute;
+      left: -12px;
+      color: var(--ink-mute);
+    }
+
+    /* ========== Sections (label : body grid, mirrors landing) ========== */
+    .section {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .section h2 {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+    .section .body {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+    .section .body strong { color: var(--ink); font-weight: 500; }
+
+    /* ========== Footer ========== */
+    .foot {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+    }
+    .foot a {
+      color: var(--ink-mute);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .foot a:hover { color: var(--ink); }
+
+    /* ========== Reveal animation ========== */
+    .fade {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fade 0.8s ease-out forwards;
+    }
+    .fade:nth-of-type(1) { animation-delay: 0.05s; }
+    .fade:nth-of-type(2) { animation-delay: 0.16s; }
+    .fade:nth-of-type(3) { animation-delay: 0.28s; }
+    .fade:nth-of-type(4) { animation-delay: 0.40s; }
+    .fade:nth-of-type(5) { animation-delay: 0.52s; }
+    @keyframes fade { to { opacity: 1; transform: translateY(0); } }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 720px) {
+      .page { padding: 24px 20px 64px; }
+      .nav { margin-bottom: 40px; }
+      .resume-hero { margin-bottom: 40px; }
+      .section { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+      .foot { flex-direction: column; gap: 8px; }
+    }
+
+    /* ========== Print: simplified, monochrome, A4-friendly ========== */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #111 !important;
+        animation: none !important;
+        background-image: none !important;
+      }
+      .nav, .theme-toggle, .lang-switch, .foot, .fade { animation: none !important; opacity: 1 !important; transform: none !important; }
+      .nav, .foot { display: none !important; }
+      .page { padding: 0 !important; max-width: none; }
+      .resume-hero { margin-bottom: 24px; }
+      .section { padding: 16px 0; border-color: #ccc; }
+      a { color: inherit !important; text-decoration: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="nav fade">
+      <a class="logo" href="/">
+        <span class="dot"></span>
+        <span>shane-chang</span>
+      </a>
+      <div class="nav-actions">
+        <a href="/">{navLabels.home}</a>
+        <a class="lang-switch" href={otherLangHref}>{otherLangLabel}</a>
+        <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+          <svg class="sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer class="foot fade">
+      <span>// {footerYear}</span>
+      <a href="mailto:shane.z.chang@hotmail.com">shane.z.chang@hotmail.com</a>
+    </footer>
+  </main>
+
+  <script is:inline>
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  </script>
+</body>
+</html>

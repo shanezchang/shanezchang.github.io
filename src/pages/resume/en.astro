@@ -1,0 +1,13 @@
+---
+import ResumeLayout from '../../layouts/ResumeLayout.astro';
+import ResumeBody from '../../components/ResumeBody.astro';
+import { en } from '../../data/resume';
+---
+
+<ResumeLayout
+  lang="en"
+  title="Resume — Shane Chang"
+  description="Resume of Shane Chang — software engineer based in Shenzhen. Backend systems, AI agents, internal platforms."
+>
+  <ResumeBody data={en} lang="en" />
+</ResumeLayout>
