@@ -128,14 +128,36 @@ export const en: ResumeData = {
       companyLogo: '/assets/yangteng-logo.svg',
       role: 'Java',
       date: 'Aug 2023 - May 2025',
-      tags: ['SpringBoot', 'MyBatis', 'MySQL', 'SonarQube', 'Floyd-Warshall', 'RBAC/ABAC'],
+      tags: ['SpringBoot', 'MyBatis', 'MySQL', 'Distributed Transactions', 'Floyd-Warshall', 'PDA', 'RBAC/ABAC'],
       projects: [
         {
-          name: 'Supply Chain Warehouse Management — German Cross-Border WMS',
+          name: 'WMS Platform — ODOO Migration & Frontline Devices',
           details: [
-            'Built a custom WMS to replace ODOO; a 3-person team delivered the system in 3 months, supporting 30K+ daily warehouse operations; reduced slow queries by 80% through indexing and logic refactoring, cutting response time from 3.2s to 0.8s',
-            'Led the picking-path optimization engine using Floyd-Warshall algorithm, achieving millisecond-level scheduling across 5,000+ storage locations and shortening average picking paths by 37%',
-            'Set up SonarQube + CI/CD pipeline to enforce code quality; redesigned RBAC + ABAC hybrid authorization model, passing Deloitte audit and meeting GDPR compliance requirements',
+            'Led the migration from a legacy ODOO open-source warehouse system to a self-built WMS; a 3-person team delivered the new platform in 3 months and grew it to support 30K+ daily warehouse operations',
+            'Owned the WMS data model and end-to-end operational flow — procurement inbound, putaway, in-warehouse inventory ops (cycle count / adjustment), picking outbound, and shipping handoff to sales orders — with inventory consistency under distributed transactions',
+            'Built and shipped the warehouse-floor PDA device application frontline operators use daily, optimizing the scan / pick / putaway / counting experience',
+            'Led the picking-path optimization engine using Floyd-Warshall over 5,000+ storage locations for millisecond-level scheduling, shortening average picking paths by 37%',
+          ],
+        },
+        {
+          name: 'German Warehouse Robotics Integration',
+          details: [
+            'Integrated a third-party smart warehouse robotics system (GPS-guided robots) with the self-built WMS at the German site, designing the cross-system scheduling layer between software and hardware',
+            'Lifted inbound throughput and picking-outbound efficiency through tightly-coupled WMS + robotics workflows under complex multi-system business scenarios',
+          ],
+        },
+        {
+          name: 'IPO Audit Compliance & Standardization',
+          details: [
+            'Supported the company\'s IPO Deloitte audit by redesigning the RBAC + ABAC hybrid authorization model (user / role / department permissions) as a standardized identity layer, meeting GDPR compliance requirements',
+            'Implemented unified, structured logging across the full operational chain — inbound, putaway, picking, cycle count, outbound — for end-to-end traceability and audit-grade observability',
+          ],
+        },
+        {
+          name: 'Engineering Quality & SQL Performance',
+          details: [
+            'Set up SonarQube alongside the CI/CD pipeline and Git branch-management conventions to enforce code standards and consistent delivery quality',
+            'Drove the slow-SQL remediation effort against large-volume warehousing tables (index misses, complex table structures, awkward business SQL), cutting slow queries by 80% and dropping critical response time from 3.2s to 0.8s',
           ],
         },
       ],
@@ -289,14 +311,36 @@ export const zh: ResumeData = {
       companyLogo: '/assets/yangteng-logo.svg',
       role: 'Java',
       date: '2023.08 - 2025.05',
-      tags: ['SpringBoot', 'MyBatis', 'MySQL', 'SonarQube', 'Floyd-Warshall', 'RBAC/ABAC'],
+      tags: ['SpringBoot', 'MyBatis', 'MySQL', '分布式事务', 'Floyd-Warshall', 'PDA', 'RBAC/ABAC'],
       projects: [
         {
-          name: '供应链仓储管理项目（德国仓储供应链）',
+          name: 'WMS 仓储管理系统建设与演进',
           details: [
-            '自研 WMS 系统替代 ODOO，3人团队 3 个月上线，支撑日均 3万+ 仓储操作；慢 SQL 优化专项减少 80% 慢查询，响应时间从 3.2s 降至 0.8s',
+            '主导旧仓储系统（基于 ODOO 开源社区版）到自建 WMS 的渐进式迁移；3 人团队 3 个月上线新平台，并稳步扩展支撑日均 3万+ 仓储操作',
+            '负责 WMS 数据模型与全链路操作流程——采购入库、上架、库内库存管理（盘点 / 库存调整）、拣货出库、发货对接销售订单，在分布式事务下保障库存一致性',
+            '主导仓库手持 PDA 设备软件的开发与上线，优化一线作业人员的扫码 / 拣货 / 上架 / 盘点体验',
             '主导拣货路径优化引擎，基于 Floyd-Warshall 算法在 5000+ 库位下实现毫秒级调度，拣货路径平均缩短 37%',
-            '搭建 SonarQube + CI/CD 流水线，推动代码质量治理；重构 RBAC + ABAC 混合鉴权模型，通过德勤审计，满足 GDPR 合规要求',
+          ],
+        },
+        {
+          name: '德国智能仓储机器人对接项目',
+          details: [
+            '对接三方智能仓储机器人系统（GPS 智能机器人），将自研 WMS 与智能硬件能力结合，设计跨系统的高效调度层',
+            '在多系统对接的复杂业务场景下，通过 WMS 与机器人协同工作流显著提升入库与拣货出库效率',
+          ],
+        },
+        {
+          name: '上市审计与标准化治理专项',
+          details: [
+            '支持公司上市德勤审计，重构 RBAC + ABAC 混合鉴权模型（用户 / 角色 / 部门权限），形成标准化身份能力层，满足 GDPR 合规要求',
+            '落地覆盖全环节（入库、上架、拣货、盘点、出库）的统一日志治理与落表，为审计提供端到端的可追溯性与审计级可观测性',
+          ],
+        },
+        {
+          name: '工程质量与性能优化',
+          details: [
+            '搭建 SonarQube 并结合 CI/CD 流水线，规范 Git 分支管理机制，确保代码标准与交付质量',
+            '主导慢 SQL 专项治理，针对国内仓储系统大数据量、复杂表结构、索引失效与业务语法不当等问题深度优化，慢查询减少 80%，关键响应时间从 3.2s 降至 0.8s',
           ],
         },
       ],
