@@ -42,16 +42,15 @@ const hasMultipleProjects = entry.projects.length > 1;
         <div class="project">
           <div class="project-head">
             <span class="project-name">{project.name}</span>
-            {project.url && (
-              <a
-                class="project-link"
-                href={project.url}
-                target="_blank"
-                rel="noopener"
-                aria-label={`Visit ${project.name}`}
-              >
-                <Icon name="arrow-up-right" size={12} />
-              </a>
+            {project.links && project.links.length > 0 && (
+              <div class="project-links">
+                {project.links.map((link) => (
+                  <a class="project-link" href={link.url} target="_blank" rel="noopener">
+                    <span>{link.label}</span>
+                    <Icon name="arrow-up-right" size={11} />
+                  </a>
+                ))}
+              </div>
             )}
           </div>
           <ul class="project-detail">
@@ -183,8 +182,9 @@ const hasMultipleProjects = entry.projects.length > 1;
   .project-head {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 8px;
+    flex-wrap: wrap;
   }
   .project-name {
     font-size: 13.5px;
@@ -193,24 +193,33 @@ const hasMultipleProjects = entry.projects.length > 1;
     font-style: italic;
     letter-spacing: -0.005em;
   }
+  .project-links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
   .project-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
+    gap: 5px;
+    padding: 3px 9px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    background: var(--bg-elev);
     border: 1px solid var(--rule);
     border-radius: 5px;
-    color: var(--ink-mute);
-    background: var(--bg-elev);
     text-decoration: none;
     transition: all 0.2s;
   }
+  .project-link svg { color: var(--ink-mute); transition: color 0.2s; }
   .project-link:hover {
     color: var(--accent);
     border-color: var(--accent);
     transform: translate(1px, -1px);
   }
+  .project-link:hover svg { color: var(--accent); }
 
   .project-detail {
     list-style: none;

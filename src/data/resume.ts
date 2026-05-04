@@ -9,10 +9,16 @@
  *   primary lines later, sweep this rule rather than spot-toggling tags.
  */
 
+export interface ProjectLink {
+  /** Short user-facing label (e.g. 'lessie.ai', 'GitHub', 'arXiv'). */
+  label: string;
+  url: string;
+}
+
 export interface ExperienceProject {
   name: string;
-  /** Optional canonical URL for the project (renders an external-link icon). */
-  url?: string;
+  /** External resources for this project (website, repo, paper, demo, …). */
+  links?: ProjectLink[];
   details: string[];
 }
 
@@ -49,6 +55,8 @@ export interface ResumeData {
     school: string;
     schoolLogo: string;
     college: string;
+    /** Specific major within the college (e.g. "Mathematics and Applied Mathematics"). */
+    major?: string;
     degree: string;
     date: string;
   };
@@ -72,6 +80,7 @@ export const en: ResumeData = {
     school: 'Shenzhen University',
     schoolLogo: '/assets/szu-logo.png',
     college: 'School of Mathematical Sciences',
+    major: 'Mathematics and Applied Mathematics',
     degree: "Bachelor's",
     date: '2018 - 2022',
   },
@@ -91,12 +100,22 @@ export const en: ResumeData = {
       projects: [
         {
           name: 'Lessie AI — AI Agent for People Discovery',
-          url: 'https://lessie.ai/',
+          links: [{ label: 'lessie.ai', url: 'https://lessie.ai/' }],
           details: [
             'Lead architecture evolution of Lessie AI, the company\'s flagship people-search agent, migrating from procedural workflow orchestration to multi-agent collaboration on LangChain / LangGraph / LangSmith; refined context engineering and introduced a progressive disclosure capability mechanism, lifting single-agent intelligence, latency, and end-to-end quality',
             'Own the search agent\'s tool integration and lifecycle; ship three vertical end-to-end search flows — KOL / influencer outreach, tech-industry B2B prospecting, and academic discovery',
             'Apply AI Native methods so the agent auto-detects and remediates production effect issues, system errors, and bugs; contribute to data governance and project cost reporting',
             'Build Lark-bot integrations for internal business workflows and maintain an internal Skill platform powering team dashboards and KPI visibility',
+          ],
+        },
+        {
+          name: 'People Search Bench — Open Benchmark for People Discovery',
+          links: [
+            { label: 'GitHub', url: 'https://github.com/LessieAI/people-search-bench' },
+            { label: 'arXiv', url: 'https://arxiv.org/abs/2603.27476' },
+          ],
+          details: [
+            'Led the People Search Benchmark end-to-end as the core engineer; designed cross-platform evaluation dimensions and combined engineering practice with academic study to demonstrate Lessie\'s state-of-the-art performance on people discovery; open-sourced the benchmark and co-authored the accompanying arXiv paper',
           ],
         },
       ],
@@ -209,6 +228,7 @@ export const zh: ResumeData = {
     school: '深圳大学',
     schoolLogo: '/assets/szu-logo.png',
     college: '数学科学学院',
+    major: '数学与应用数学',
     degree: '本科',
     date: '2018 - 2022',
   },
@@ -228,12 +248,22 @@ export const zh: ResumeData = {
       projects: [
         {
           name: 'Lessie AI — 找人领域 AI Agent',
-          url: 'https://lessie.ai/',
+          links: [{ label: 'lessie.ai', url: 'https://lessie.ai/' }],
           details: [
             '主导核心产品 Lessie AI（找人领域 AI Agent）的架构演进，从早期流程编排升级为基于 LangChain / LangGraph / LangSmith 的多 Agent 协作架构；通过上下文工程优化与"渐进式披露能力"机制，提升单 Agent 智能水平、响应速度与整体效果',
             '负责搜索 Agent 找人能力的工具对接、开发与管理；落地三条端到端垂直搜索场景——KOL 网红达人营销、科技圈 B 端客户精准搜索、学术圈专业搜索',
             '以 AI Native 方式实现 AI 对线上效果问题、系统错误及 Bug 的自动识别与高效修复；参与大数据治理与项目成本上报管理',
             '基于飞书机器人搭建业务智能机器人；开发并维护内部 Skill 平台，通过更新各类 Skill 支持数据看板建设与业务指标可视化',
+          ],
+        },
+        {
+          name: 'People Search Bench — 找人领域开源评测基准',
+          links: [
+            { label: 'GitHub', url: 'https://github.com/LessieAI/people-search-bench' },
+            { label: 'arXiv', url: 'https://arxiv.org/abs/2603.27476' },
+          ],
+          details: [
+            '作为核心研发主导 People Search Benchmark 项目从 0 到 1 的实施；横向对比多平台并设计多维度评估方法，结合工程实践与学术产出共同论证 Lessie 在找人领域达到 SOTA 水平；开源代码仓库并参与 arXiv 论文撰写',
           ],
         },
       ],

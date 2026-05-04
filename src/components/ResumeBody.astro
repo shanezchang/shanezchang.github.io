@@ -80,11 +80,14 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
   <h2>{data.sectionTitles.education}</h2>
   <div class="body">
     <div class="education">
-      <div class="edu-left">
-        <img src={data.education.schoolLogo} alt={data.education.school} class="school-logo" />
-        <span class="school">{data.education.school}</span>
-        <span class="degree">{data.education.degree}</span>
-        <span class="college">{data.education.college}</span>
+      <div class="edu-main">
+        <div class="edu-row">
+          <img src={data.education.schoolLogo} alt={data.education.school} class="school-logo" />
+          <span class="school">{data.education.school}</span>
+          <span class="degree">{data.education.degree}</span>
+          <span class="college">{data.education.college}</span>
+        </div>
+        {data.education.major && <p class="major">{data.education.major}</p>}
       </div>
       <span class="edu-date">{data.education.date}</span>
     </div>
@@ -166,11 +169,17 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
   .education {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 8px 16px;
   }
-  .edu-left {
+  .edu-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .edu-row {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -199,6 +208,13 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
     font-size: 13.5px;
     color: var(--ink-soft);
   }
+  .major {
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.01em;
+    margin-left: 32px; /* line up with the school name (logo width + gap) */
+  }
   .edu-date {
     font-family: 'Geist Mono', monospace;
     font-size: 11.5px;
@@ -212,6 +228,7 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
     .pill { padding: 6px 10px; font-size: 11px; }
     .contact-strip { gap: 4px 12px; }
     .education { flex-direction: column; align-items: flex-start; }
+    .major { margin-left: 0; }
   }
 
   @media print {
