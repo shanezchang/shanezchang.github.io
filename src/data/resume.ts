@@ -45,6 +45,19 @@ export interface ResumeContact {
   value: string;
 }
 
+/**
+ * One numbered "highlight": a strength claim backed by concrete evidence
+ * pointing at the experience timeline. Keeps the resume's claim density honest.
+ */
+export interface Highlight {
+  /** Short, scannable title (e.g. "Learning Agility"). */
+  title: string;
+  /** One-line statement of what this strength looks like in practice. */
+  tagline: string;
+  /** Evidence bullets, each pointing at a concrete project / metric. */
+  evidence: string[];
+}
+
 export interface ResumeData {
   name: string;
   /** Short factoids rendered first in the hero strip (e.g. years of experience). */
@@ -64,9 +77,12 @@ export interface ResumeData {
     education: string;
     experience: string;
     strengths: string;
+    highlights: string;
   };
   experience: ExperienceEntry[];
   strengths: StrengthCategory[];
+  /** Optional evidence-backed strength signals; rendered between Strengths and Experience. */
+  highlights?: Highlight[];
 }
 
 export const en: ResumeData = {
@@ -88,6 +104,7 @@ export const en: ResumeData = {
     education: 'Education',
     experience: 'Experience',
     strengths: 'Strengths',
+    highlights: 'Highlights',
   },
   experience: [
     {
@@ -176,30 +193,30 @@ export const en: ResumeData = {
       tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
         {
-          name: 'Internet Ad Monitoring — Government Compliance Pipeline',
+          name: 'Internet Ad Monitoring',
           details: [
-            'Built and scaled the ad-collection backbone on Kafka streaming + K8s dynamic node scaling, ingesting tens of GB/hour from Tencent Cloud Lookup (URLs aggregated from Tencent Manager, Tencent Browser, and WeChat) and sustaining 100M+ daily ad records across web, app, and Mini Program platforms',
-            'Designed the web-side collection pipeline using Selenium virtual browsers with ADBlock-based ad-link interception, paired with Python multi-process / multi-thread concurrency for high-throughput crawling',
-            'Built the screenshot-evidence service for landing pages — dynamic browser sizing with scrolling capture stitched into full-page long images, automatically watermarked and timestamped for legal admissibility before delivery to government regulators',
-            'Built the mobile / Mini Program collection track on an Airtest + ADB emulator cluster (50+ concurrent devices) with MitmProxy-based HTTPS decryption for WeChat / Mini Program inspection; covered news portals, major ad alliances (ByteDance Pangle, Baidu Union), and WeChat Mini Programs, automating VM restart, APK install, login persistence, and WeChat account-pool scheduling — sustaining 500 app ads / 1,500 Mini Program ads / 2,000+ Official Account entity records per day',
-            'Designed the Mini Program ad scoring and weighting system, balancing collection breadth against frequency to maximize the yield of high-value violation leads',
-            'Tuned Redis Bloom-Filter URL dedup at scale — sized the bitmap and chose the hash count to keep false-positive rate under 0.1% on internet-scale URL streams',
+            'Built the ad-collection backbone on Kafka + K8s dynamic node scaling, ingesting tens of GB/hour from Tencent Cloud Lookup (URLs aggregated from Tencent Manager / Browser / WeChat) and sustaining 100M+ daily records across web, app, and Mini Program',
+            'Built the web-side collection pipeline on Selenium virtual browsers + ADBlock interception, with Python multi-process / multi-thread concurrency for high-throughput crawling',
+            'Built the screenshot-evidence service: dynamic browser sizing + scrolling capture stitched into full-page long images, watermarked and timestamped for legal admissibility before delivery to government regulators',
+            'Built the mobile / Mini Program collection track on an Airtest + ADB emulator cluster (50+ devices) with MitmProxy HTTPS decryption; automated VM restart, APK install, login persistence, and WeChat account-pool scheduling across news portals, ad alliances (ByteDance Pangle, Baidu Union), and WeChat Mini Programs — 500 app ads / 1,500 Mini Program ads / 2,000+ Official Account entities per day',
+            'Designed the Mini Program ad scoring & weighting system, balancing breadth vs frequency to maximize high-value violation leads',
+            'Engineered Redis Bloom-Filter URL dedup over a 100M+ daily URL stream — bitmap sized at m/n ≈ 14.4 with k=10 hash functions, sharded into per-source bitmaps to stay within Redis\'s 512MB per-key limit and hold false-positive rate under 0.1%',
           ],
         },
         {
           name: 'Tencent Cloud — Brand Protection',
           details: [
-            'Built and maintained the Brand Protection platform\'s Go backend — interface upkeep, scheduled-job pipelines, and strategic-module development for the brand-side product',
+            'Built and maintained the Brand Protection platform\'s Go backend — interface upkeep, scheduled-job pipelines, and strategic-module development',
             'Adapted the WeChat Mini Program ad-monitoring capability into a brand-protection use case, surfacing counterfeit-product Mini Programs (e.g., Burberry, Maxim\'s Mooncake) as actionable leads for brand owners — averaging ~50 effective leads per brand per day',
           ],
         },
         {
           name: 'Financial Sentiment Monitoring',
           details: [
-            'Took ownership of the team\'s long-running financial-sentiment monitoring pipeline; drove big-data governance across a complex DAG of SQL and PySpark scripts spanning interconnected processing nodes on Tencent Cloud',
-            'Built an enterprise-entity extraction service backed by a Trie tree over 100M+ Chinese company-name records integrated from Tianyancha (天眼查); matched candidate company entities out of violation text in milliseconds and joined them against fraud-monitoring rules',
-            'Owned model development for fraud lead generation — entity-anchored signals targeted at illegal financial pyramid schemes — lifting fraud detection from 50 to 2,000 records/day and valid-advertiser identification rate from 30% to 95%',
-            'Anchored the pipeline on URL + text content processing with Tencent Cloud services; the design optimized for data freshness, lead validity, and entity-precise attribution focused on the financial-fraud vertical',
+            'Owned the financial-sentiment monitoring pipeline; drove big-data governance across a complex DAG of SQL and PySpark scripts on Tencent Cloud',
+            'Built an enterprise-entity extraction service backed by a Trie over 100M+ Tianyancha company-name records; matched candidate entities from violation text in milliseconds and joined them against fraud-monitoring rules',
+            'Owned model development for fraud lead generation — entity-anchored signals targeting financial pyramid schemes — lifting fraud detection from 50 to 2,000 records/day and valid-advertiser identification rate from 30% to 95%',
+            'Anchored the pipeline on URL + text content processing with Tencent Cloud services — optimizing data freshness, lead validity, and entity-precise attribution in the financial-fraud vertical',
           ],
         },
       ],
@@ -263,6 +280,71 @@ export const en: ResumeData = {
       ],
     },
   ],
+  highlights: [
+    {
+      title: 'Learning Agility',
+      tagline: 'Three production backend languages and entirely new domains, each shipped within months of starting.',
+      evidence: [
+        'Java + SpringBoot at Yangteng → 30K-ops/day WMS shipped in 3 months by a 3-person team',
+        'Picked up Go mid-tenure at Tencent for the Brand Protection backend',
+        'Joined Superlinear in May 2025 and shipped a multi-agent migration on LangChain / LangGraph the same year',
+      ],
+    },
+    {
+      title: 'Algorithm-to-Production Fluency',
+      tagline: 'CS algorithms operationalized at production scale, not whiteboarded.',
+      evidence: [
+        'Floyd-Warshall picking-path engine across 5,000+ storage locations — sub-millisecond scheduling, average paths −37%',
+        'Trie tree over 100M+ Tianyancha company names for real-time fraud-entity matching from violation text',
+        'Redis Bloom-Filter URL dedup at m/n ≈ 14.4, k=10 — FPR under 0.1% on 100M+ daily entries',
+      ],
+    },
+    {
+      title: 'Platform & 0-to-1 Builder',
+      tagline: 'Default to building the floor, not just the room on top of it.',
+      evidence: [
+        'Built Yangteng\'s WMS from scratch to replace ODOO — 3-person team delivered in 3 months',
+        'Stood up Superlinear\'s AI Infrastructure & Tooling Layer as a cross-product platform: model evaluation, vendor strategy, fallback, AI Native ops',
+        'Authored an internal Skill platform powering team dashboards and KPI visibility',
+      ],
+    },
+    {
+      title: 'Engineering for Scale & Reliability',
+      tagline: 'Production systems that don\'t fall over under pressure.',
+      evidence: [
+        'Sustained 100M+ daily ad records on Kafka + K8s with the Bloom Filter dedup layer',
+        'Designed inventory consistency under distributed transactions across the WMS data flow',
+        'Built model-level fallback on LangChain ReAct agents — backup agent takes over on model timeout or error',
+      ],
+    },
+    {
+      title: 'Multi-Language Backend Stack',
+      tagline: 'Python, Java, Go — each in production, not just exposure.',
+      evidence: [
+        'Python: Tencent ad-collection backbone + Lessie multi-agent core',
+        'Java + SpringBoot: Yangteng WMS + PDA + audit standardization',
+        'Go: Tencent Cloud Brand Protection backend',
+      ],
+    },
+    {
+      title: 'Compliance-Grade Engineering',
+      tagline: 'Work that has held up under external audit.',
+      evidence: [
+        'Tencent screenshot-evidence service with watermarks + timestamps, accepted as legal evidence by government regulators',
+        'Yangteng RBAC + ABAC redesign passed Deloitte IPO audit and met GDPR',
+        'Yangteng full-chain unified logging for audit-grade traceability across inbound, putaway, picking, count, and outbound',
+      ],
+    },
+    {
+      title: 'End-to-End Data → AI Pipeline',
+      tagline: 'Whole-pipeline ownership: ingest → governance → model → product.',
+      evidence: [
+        'Tencent Financial Sentiment: data-canvas governance + Trie matching + fraud model + cloud delivery in one stack',
+        'Lessie: model evaluation + vendor strategy + agent reliability + vertical product flows',
+        '"AI Native" auto-detection and governance feel like a natural extension of the data work, not a buzzword',
+      ],
+    },
+  ],
 };
 
 export const zh: ResumeData = {
@@ -284,6 +366,7 @@ export const zh: ResumeData = {
     education: '教育经历',
     experience: '工作经历',
     strengths: '个人优势',
+    highlights: '亮点',
   },
   experience: [
     {
@@ -372,30 +455,30 @@ export const zh: ResumeData = {
       tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
         {
-          name: '互联网广告监测项目（政府监管对口）',
+          name: '互联网广告监测项目',
           details: [
-            '搭建并扩展广告采集主链路——基于 Kafka 流处理 + K8s 节点动态扩容，承接腾讯云查每小时数十 GB 数据流（聚合腾讯管家 / 腾讯浏览器 / 微信等多渠道 URL），支撑日均 1 亿级广告数据采集，覆盖 Web、APP 与小程序多端',
-            '设计网页端采集链路：基于 Selenium 虚拟浏览器结合 ADBlock 三方库拦截广告链接，配合 Python 多进程多线程方案实现高并发采集',
-            '建设落地页截图存证服务：动态定义浏览器宽高、分屏滑动后拼接为完整长图，自动添加腾讯内部水印与时间戳，确保证据链法律效力，对接政府监管平台',
-            '构建移动端 / 小程序采集集群：基于 Airtest + ADB 实现 50+ 设备并发的手机模拟器集群，通过 MitmProxy 解密 HTTPS 流量；覆盖新闻门户、主流广告联盟（字节跳动穿山甲、百度联盟等）与微信小程序，自动化处理虚拟机重启、APK 安装、登录态维护与微信账号池调度，稳定输出 APP 广告 500条/天 / 小程序广告 1500条/天 / 公众号主体 2000+条/天',
-            '设计小程序广告评分权重体系，平衡采集广度与频次，最大化高价值违规广告线索的产出',
-            '使用 Redis 布隆过滤器对海量 URL 去重，合理配置 Bitmap 空间与哈希函数数量，将误判率控制在 0.1% 以下',
+            '搭建广告采集主链路（Kafka + K8s 动态扩容），承接腾讯云查每小时数十 GB 数据流（聚合腾讯管家 / 腾讯浏览器 / 微信等多渠道 URL），支撑日均 1 亿级广告数据采集，覆盖 Web、APP 与小程序多端',
+            '网页端采集链路基于 Selenium 虚拟浏览器 + ADBlock 拦截广告链接，配合 Python 多进程多线程实现高并发采集',
+            '落地页截图存证服务：动态浏览器宽高 + 分屏滑动拼接长图，自动加水印与时间戳确保证据链法律效力，对接政府监管平台',
+            '移动端 / 小程序采集集群：Airtest + ADB 50+ 设备并发模拟器 + MitmProxy 解密 HTTPS；覆盖新闻门户、主流广告联盟（穿山甲、百度联盟等）与微信小程序，自动化处理虚拟机重启 / APK 安装 / 登录态 / 微信账号池调度，稳定输出 APP 广告 500条/天、小程序 1500条/天、公众号主体 2000+条/天',
+            '设计小程序广告评分权重体系，平衡采集广度与频次以最大化高价值违规线索产出',
+            '针对日均 1 亿+ 唯一 URL 调优 Redis 布隆过滤器：bitmap 按 m/n ≈ 14.4 配置、哈希函数 k=10，按数据源分片以规避 Redis 单 key 512MB 限制，将误判率稳控 0.1% 以内',
           ],
         },
         {
           name: '腾讯云 — 品牌保护',
           details: [
             '基于 Go 语言开发与维护腾讯云品牌保护平台后端：日常接口维护、定时任务编排与战略性模块开发',
-            '将微信小程序广告监测能力进行改造与迁移，用于监控盗版 / 违规小程序——例如针对"巴宝莉"、"美心月饼"等品牌方，输出在小程序中售卖盗版产品的违法线索，平均每个品牌输出有效数据 50条/天',
+            '将微信小程序广告监测能力改造迁移到品牌保护场景——例如针对"巴宝莉"、"美心月饼"等品牌方，输出在小程序中售卖盗版产品的违法线索，平均每个品牌产出有效数据 50条/天',
           ],
         },
         {
           name: '金融舆情监测项目',
           details: [
-            '承接团队历史悠久的金融舆情监测项目，深入参与大数据治理工作，处理由 SQL、PySpark 等脚本组成的复杂大数据画布及节点间相互依赖关系，运行于腾讯云之上',
-            '基于天眼查 1 亿+ 全国企业主体数据构建前缀树（Trie）匹配服务——从违规文本中毫秒级提取候选企业实体，并与金融传销监管规则联动判定',
-            '承接简易模型开发，结合企业主体产出金融传销相关的违规线索；传销数据检出量由 50条/天 提升至 2000条/天，有效广告主体识别率从 30% 提升至 95%',
-            '依托腾讯云服务完成 URL 与文本内容的全链路处理，整体方案聚焦于数据实时性、线索有效性与企业主体精准归因，专注于金融传销这一细分方向',
+            '负责金融舆情监测项目，深入参与大数据治理——处理由 SQL、PySpark 等脚本组成的复杂大数据画布与节点间依赖关系，运行于腾讯云之上',
+            '基于天眼查 1 亿+ 全国企业主体数据构建前缀树（Trie）匹配服务——从违规文本中毫秒级提取候选企业实体，与金融传销监管规则联动判定',
+            '承接简易模型开发，结合企业主体产出金融传销相关违规线索；传销数据检出量由 50条/天 提升至 2000条/天，有效广告主体识别率从 30% 提升至 95%',
+            '依托腾讯云完成 URL 与文本全链路处理，方案聚焦数据实时性、线索有效性与企业主体精准归因，专注金融传销细分方向',
           ],
         },
       ],
@@ -456,6 +539,71 @@ export const zh: ResumeData = {
         { text: '从 0 到 1 架构' },
         { text: '结果导向' },
         { text: '独立解决问题' },
+      ],
+    },
+  ],
+  highlights: [
+    {
+      title: '快速学习与适配能力',
+      tagline: '三门生产级后端语言、跨度极大的业务领域，每段都能在数月内交付。',
+      evidence: [
+        'Yangteng 入职即上手 Java + SpringBoot，3 人团队 3 个月落地 30K+ 仓储日操作的 WMS',
+        '腾讯任期内切换到 Go，承接腾讯云品牌保护后端',
+        '2025 年 5 月加入 Superlinear，同年内完成多 Agent 架构在 LangChain / LangGraph 上的迁移',
+      ],
+    },
+    {
+      title: '算法到工程的落地能力',
+      tagline: '把 CS 算法跑到生产规模，不是停在白板。',
+      evidence: [
+        'Floyd-Warshall 拣货路径引擎跨 5000+ 库位，毫秒级调度、路径平均缩短 37%',
+        '基于 1 亿+ 天眼查企业主体的 Trie 前缀树，毫秒级从违规文本中匹配企业实体',
+        'Redis 布隆过滤器（m/n ≈ 14.4、k=10）在日均 1 亿+ URL 流量下将误判率稳控 0.1% 以内',
+      ],
+    },
+    {
+      title: '平台型 0-to-1 builder',
+      tagline: '更倾向于建"地板"，而不是只盖上面的房间。',
+      evidence: [
+        'Yangteng WMS 从 0 自建替代 ODOO，3 人团队 3 个月上线',
+        '在 Superlinear 把 AI 基础设施与工具层独立出来作为跨产品平台（模型测评 / 供应商策略 / 兜底 / AI Native）',
+        '搭建并维护内部 Skill 平台，支撑团队数据看板与 KPI 可视化',
+      ],
+    },
+    {
+      title: '面向规模与可靠性的工程能力',
+      tagline: '能在压力下稳住的生产系统。',
+      evidence: [
+        'Kafka + K8s + 布隆过滤器去重，日均 1 亿+ 广告数据稳定运行',
+        'WMS 全链路在分布式事务下保障库存一致性',
+        'LangChain ReAct Agent 的模型兜底层——超时 / 报错时备用 Agent 自动接替',
+      ],
+    },
+    {
+      title: '多语言后端实战栈',
+      tagline: 'Python / Java / Go——都跑过生产，不是"听说过"。',
+      evidence: [
+        'Python：腾讯广告采集主链路 + Lessie 多 Agent 核心',
+        'Java + SpringBoot：Yangteng WMS + PDA + 审计标准化',
+        'Go：腾讯云品牌保护后端',
+      ],
+    },
+    {
+      title: '可经受审计的工程审美',
+      tagline: '做的事经得住外部第三方审查。',
+      evidence: [
+        '腾讯截图存证服务带水印与时间戳，作为法律证据交付政府监管平台',
+        'Yangteng RBAC + ABAC 重构通过德勤上市审计，满足 GDPR',
+        'Yangteng 全环节统一日志治理（入库 / 上架 / 拣货 / 盘点 / 出库），审计级可追溯',
+      ],
+    },
+    {
+      title: '从数据到 AI 的端到端思路',
+      tagline: '整条 pipeline 的 ownership：接入 → 治理 → 模型 → 产品。',
+      evidence: [
+        '腾讯金融舆情：大数据画布治理 + Trie 匹配 + 传销模型 + 腾讯云交付，在同一套体系里跑通',
+        'Lessie：模型测评 + 供应商策略 + Agent 兜底 + 垂直场景产品化',
+        '让 "AI Native 自动诊断 / 治理" 成为数据工程的自然延伸，而不是 buzzword',
       ],
     },
   ],

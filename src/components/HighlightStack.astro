@@ -1,0 +1,114 @@
+---
+import type { Highlight } from '../data/resume';
+
+interface Props {
+  items: Highlight[];
+  lang: 'en' | 'zh';
+}
+
+const { items, lang } = Astro.props;
+---
+
+<div class="highlights">
+  {items.map((item, i) => (
+    <article class="highlight" data-lang={lang}>
+      <div class="num">{String(i + 1).padStart(2, '0')}</div>
+      <div class="content">
+        <h3 class="title">{item.title}</h3>
+        <p class="tagline">{item.tagline}</p>
+        <ul class="evidence">
+          {item.evidence.map((e) => <li>{e}</li>)}
+        </ul>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .highlights {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .highlight {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.25s;
+  }
+  .highlight:first-child { padding-top: 0; }
+  .highlight:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    padding-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .content { min-width: 0; }
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 12px;
+    max-width: 640px;
+  }
+  /* Chinese tagline reads better in the regular sans face. */
+  .highlight[data-lang="zh"] .tagline {
+    font-family: 'Geist', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    letter-spacing: 0.01em;
+  }
+
+  .evidence {
+    list-style: none;
+    padding: 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .evidence li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 5px;
+  }
+  .evidence li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 4px;
+    height: 4px;
+    background: var(--ink-mute);
+    border-radius: 50%;
+  }
+  .evidence li:last-child { margin-bottom: 0; }
+
+  @media (max-width: 720px) {
+    .highlight { grid-template-columns: 32px 1fr; gap: 12px; padding: 18px 0; }
+    .num { font-size: 12px; }
+    .title { font-size: 15px; }
+    .tagline { font-size: 12px; }
+    .evidence { font-size: 13px; }
+  }
+
+  @media print {
+    .num { color: #555 !important; }
+    .evidence li::before { background: #555 !important; }
+    .highlight { padding: 14px 0; border-color: #ccc !important; }
+  }
+</style>
