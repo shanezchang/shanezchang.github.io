@@ -173,26 +173,33 @@ export const en: ResumeData = {
       companyLogo: '/assets/tencent-logo.avif',
       role: 'Python',
       date: 'May 2021 - Jul 2023',
-      tags: ['Kafka', 'Redis', 'Airtest', 'MitmProxy', 'Hive', 'Tencent Cloud'],
+      tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
         {
-          name: 'Internet Ad Monitoring',
+          name: 'Internet Ad Monitoring — Government Compliance Pipeline',
           details: [
-            'Built and scaled the ad-collection backbone — Kafka task distribution, Redis Bloom-filter URL dedup, and an Airtest + ADB mobile emulator cluster (50+ concurrent devices) — sustaining 100M+ daily ad records across web, app, and Mini Program platforms',
-            'Decrypted HTTPS traffic via MitmProxy and built a WeChat token pool plus a Mini Program ad scoring system, delivering 500 app ads / 1,500 Mini Program ads / 2,000+ Official Account entity records per day',
-            'Optimized the screenshot evidence service for stability and throughput; instrumented data-quality metrics into BI dashboards for end-to-end pipeline observability',
-          ],
-        },
-        {
-          name: 'Financial Sentiment Monitoring',
-          details: [
-            'Built an enterprise-entity extraction service on Hive workflows, lifting fraud detection from 50 to 2,000 records/day and valid-advertiser identification from 30% to 95%',
+            'Built and scaled the ad-collection backbone on Kafka streaming + K8s dynamic node scaling, ingesting tens of GB/hour from Tencent Cloud Lookup (URLs aggregated from Tencent Manager, Tencent Browser, and WeChat) and sustaining 100M+ daily ad records across web, app, and Mini Program platforms',
+            'Designed the web-side collection pipeline using Selenium virtual browsers with ADBlock-based ad-link interception, paired with Python multi-process / multi-thread concurrency for high-throughput crawling',
+            'Built the screenshot-evidence service for landing pages — dynamic browser sizing with scrolling capture stitched into full-page long images, automatically watermarked and timestamped for legal admissibility before delivery to government regulators',
+            'Built the mobile / Mini Program collection track on an Airtest + ADB emulator cluster (50+ concurrent devices) with MitmProxy-based HTTPS decryption for WeChat / Mini Program inspection; covered news portals, major ad alliances (ByteDance Pangle, Baidu Union), and WeChat Mini Programs, automating VM restart, APK install, login persistence, and WeChat account-pool scheduling — sustaining 500 app ads / 1,500 Mini Program ads / 2,000+ Official Account entity records per day',
+            'Designed the Mini Program ad scoring and weighting system, balancing collection breadth against frequency to maximize the yield of high-value violation leads',
+            'Tuned Redis Bloom-Filter URL dedup at scale — sized the bitmap and chose the hash count to keep false-positive rate under 0.1% on internet-scale URL streams',
           ],
         },
         {
           name: 'Tencent Cloud — Brand Protection',
           details: [
-            'Shipped the in-app messaging module providing Mini Program brand-protection capabilities (avg ~50 effective entries per brand/day)',
+            'Built and maintained the Brand Protection platform\'s Go backend — interface upkeep, scheduled-job pipelines, and strategic-module development for the brand-side product',
+            'Adapted the WeChat Mini Program ad-monitoring capability into a brand-protection use case, surfacing counterfeit-product Mini Programs (e.g., Burberry, Maxim\'s Mooncake) as actionable leads for brand owners — averaging ~50 effective leads per brand per day',
+          ],
+        },
+        {
+          name: 'Financial Sentiment Monitoring',
+          details: [
+            'Took ownership of the team\'s long-running financial-sentiment monitoring pipeline; drove big-data governance across a complex DAG of SQL and PySpark scripts spanning interconnected processing nodes on Tencent Cloud',
+            'Built an enterprise-entity extraction service backed by a Trie tree over 100M+ Chinese company-name records integrated from Tianyancha (天眼查); matched candidate company entities out of violation text in milliseconds and joined them against fraud-monitoring rules',
+            'Owned model development for fraud lead generation — entity-anchored signals targeted at illegal financial pyramid schemes — lifting fraud detection from 50 to 2,000 records/day and valid-advertiser identification rate from 30% to 95%',
+            'Anchored the pipeline on URL + text content processing with Tencent Cloud services; the design optimized for data freshness, lead validity, and entity-precise attribution focused on the financial-fraud vertical',
           ],
         },
       ],
@@ -362,26 +369,33 @@ export const zh: ResumeData = {
       companyLogo: '/assets/tencent-logo.avif',
       role: 'Python',
       date: '2021.05 - 2023.07',
-      tags: ['Kafka', 'Redis', 'Airtest', 'MitmProxy', 'Hive', '腾讯云'],
+      tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
         {
-          name: '互联网广告监测项目',
+          name: '互联网广告监测项目（政府监管对口）',
           details: [
-            '搭建并扩展广告采集主链路——基于 Kafka 的任务分发、Redis 布隆过滤器 URL 去重、Airtest + ADB 手机模拟器集群（50+ 设备并发），支撑日均 1 亿级广告数据采集，覆盖 Web、APP 与小程序多端',
-            '通过 MitmProxy 解密 HTTPS 流量，建立微信账号 TOKEN 池与小程序广告评分权重体系，稳定输出 APP 广告 500条/天、小程序广告 1500条/天、公众号主体数据 2000+条/天',
-            '主导截图存证服务的稳定性与吞吐量优化；建设广告采集系统监控指标体系并接入 BI 报表，实现采集链路全流程可观测',
-          ],
-        },
-        {
-          name: '金融舆情监测项目',
-          details: [
-            '在金融舆情监管项目中基于 Hive 工作流搭建企业主体提取服务，传销数据检出量由 50条/天提升至 2000条/天，有效广告主体识别率从 30% 提升至 95%',
+            '搭建并扩展广告采集主链路——基于 Kafka 流处理 + K8s 节点动态扩容，承接腾讯云查每小时数十 GB 数据流（聚合腾讯管家 / 腾讯浏览器 / 微信等多渠道 URL），支撑日均 1 亿级广告数据采集，覆盖 Web、APP 与小程序多端',
+            '设计网页端采集链路：基于 Selenium 虚拟浏览器结合 ADBlock 三方库拦截广告链接，配合 Python 多进程多线程方案实现高并发采集',
+            '建设落地页截图存证服务：动态定义浏览器宽高、分屏滑动后拼接为完整长图，自动添加腾讯内部水印与时间戳，确保证据链法律效力，对接政府监管平台',
+            '构建移动端 / 小程序采集集群：基于 Airtest + ADB 实现 50+ 设备并发的手机模拟器集群，通过 MitmProxy 解密 HTTPS 流量；覆盖新闻门户、主流广告联盟（字节跳动穿山甲、百度联盟等）与微信小程序，自动化处理虚拟机重启、APK 安装、登录态维护与微信账号池调度，稳定输出 APP 广告 500条/天 / 小程序广告 1500条/天 / 公众号主体 2000+条/天',
+            '设计小程序广告评分权重体系，平衡采集广度与频次，最大化高价值违规广告线索的产出',
+            '使用 Redis 布隆过滤器对海量 URL 去重，合理配置 Bitmap 空间与哈希函数数量，将误判率控制在 0.1% 以下',
           ],
         },
         {
           name: '腾讯云 — 品牌保护',
           details: [
-            '负责腾讯云"品牌保护"产品站内信模块开发，提供小程序品牌保护能力，平均每个品牌输出有效数据 50条/天',
+            '基于 Go 语言开发与维护腾讯云品牌保护平台后端：日常接口维护、定时任务编排与战略性模块开发',
+            '将微信小程序广告监测能力进行改造与迁移，用于监控盗版 / 违规小程序——例如针对"巴宝莉"、"美心月饼"等品牌方，输出在小程序中售卖盗版产品的违法线索，平均每个品牌输出有效数据 50条/天',
+          ],
+        },
+        {
+          name: '金融舆情监测项目',
+          details: [
+            '承接团队历史悠久的金融舆情监测项目，深入参与大数据治理工作，处理由 SQL、PySpark 等脚本组成的复杂大数据画布及节点间相互依赖关系，运行于腾讯云之上',
+            '基于天眼查 1 亿+ 全国企业主体数据构建前缀树（Trie）匹配服务——从违规文本中毫秒级提取候选企业实体，并与金融传销监管规则联动判定',
+            '承接简易模型开发，结合企业主体产出金融传销相关的违规线索；传销数据检出量由 50条/天 提升至 2000条/天，有效广告主体识别率从 30% 提升至 95%',
+            '依托腾讯云服务完成 URL 与文本内容的全链路处理，整体方案聚焦于数据实时性、线索有效性与企业主体精准归因，专注于金融传销这一细分方向',
           ],
         },
       ],
