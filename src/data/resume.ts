@@ -96,13 +96,16 @@ export const en: ResumeData = {
       monoLogo: true,
       role: 'AI Agent',
       date: 'May 2025 - Present',
-      tags: ['LangChain', 'LangGraph', 'LangSmith', 'Multi-Agent', 'Context Engineering', 'AI Native'],
+      tags: ['LangChain', 'LangGraph', 'ReAct', 'Multi-Agent', 'Context Engineering', 'AI Native'],
       projects: [
         {
           name: 'Lessie AI — AI Agent for People Discovery',
           links: [{ label: 'lessie.ai', url: 'https://lessie.ai/' }],
           details: [
-            'Lead architecture evolution of Lessie AI, the company\'s flagship people-search agent, migrating from procedural workflow orchestration to multi-agent collaboration on LangChain / LangGraph / LangSmith; refined context engineering and introduced a progressive disclosure capability mechanism, lifting single-agent intelligence, latency, and end-to-end quality',
+            'Lead architecture evolution of Lessie AI, the company\'s flagship people-search agent, migrating from procedural workflow orchestration to multi-agent collaboration on LangChain and LangGraph; refined context engineering and introduced a progressive disclosure capability mechanism, lifting single-agent intelligence, latency, and end-to-end quality',
+            'Drive end-to-end model evaluation and selection across Claude (Opus / Sonnet / Haiku), Gemini (Flash), the GPT family, and Chinese frontier models (MiniMax, Kimi, DeepSeek, Qwen); benchmark on cost / latency / quality and match the right model to each business scenario',
+            'Own LLM vendor strategy across OpenRouter (primary aggregator), AWS Bedrock, GCP Vertex AI, and smaller providers; continuously rebalance routing on price-performance shifts to optimize cost and capacity',
+            'Built a model-level fallback layer on top of LangChain ReAct agents — when a model times out or errors, a backup agent automatically takes over the in-flight task, materially lifting Lessie\'s production reliability under upstream instability',
             'Own the search agent\'s tool integration and lifecycle; ship three vertical end-to-end search flows — KOL / influencer outreach, tech-industry B2B prospecting, and academic discovery',
             'Apply AI Native methods so the agent auto-detects and remediates production effect issues, system errors, and bugs; contribute to data governance and project cost reporting',
             'Build Lark-bot integrations for internal business workflows and maintain an internal Skill platform powering team dashboards and KPI visibility',
@@ -178,6 +181,18 @@ export const en: ResumeData = {
       ],
     },
     {
+      label: 'AI Engineering',
+      tags: [
+        { text: 'Multi-Agent Systems', highlight: true },
+        { text: 'Context Engineering', highlight: true },
+        { text: 'Progressive Disclosure', highlight: true },
+        { text: 'Model Evaluation', highlight: true },
+        { text: 'Model Strategy', highlight: true },
+        { text: 'Agent Reliability', highlight: true },
+        { text: 'AI Native', highlight: true },
+      ],
+    },
+    {
       label: 'Languages',
       tags: [
         { text: 'Python', highlight: true },
@@ -187,9 +202,9 @@ export const en: ResumeData = {
     {
       label: 'Frameworks',
       tags: [
-        { text: 'LangChain', highlight: true },
-        { text: 'LangGraph', highlight: true },
-        { text: 'LangSmith' },
+        { text: 'LangChain' },
+        { text: 'LangGraph' },
+        { text: 'ReAct' },
         { text: 'SpringBoot' },
         { text: 'SpringCloud' },
         { text: 'Kafka' },
@@ -200,10 +215,8 @@ export const en: ResumeData = {
     {
       label: 'Engineering',
       tags: [
-        { text: 'Multi-Agent Systems', highlight: true },
-        { text: 'AI Native', highlight: true },
-        { text: 'Context Engineering' },
         { text: 'System Architecture' },
+        { text: 'Algorithm Engineering' },
       ],
     },
     {
@@ -244,13 +257,16 @@ export const zh: ResumeData = {
       monoLogo: true,
       role: 'AI Agent',
       date: '2025.05 - 至今',
-      tags: ['LangChain', 'LangGraph', 'LangSmith', '多 Agent', '上下文工程', 'AI Native'],
+      tags: ['LangChain', 'LangGraph', 'ReAct', '多 Agent', '上下文工程', 'AI Native'],
       projects: [
         {
           name: 'Lessie AI — 找人领域 AI Agent',
           links: [{ label: 'lessie.ai', url: 'https://lessie.ai/' }],
           details: [
-            '主导核心产品 Lessie AI（找人领域 AI Agent）的架构演进，从早期流程编排升级为基于 LangChain / LangGraph / LangSmith 的多 Agent 协作架构；通过上下文工程优化与"渐进式披露能力"机制，提升单 Agent 智能水平、响应速度与整体效果',
+            '主导核心产品 Lessie AI（找人领域 AI Agent）的架构演进，从早期流程编排升级为基于 LangChain 与 LangGraph 的多 Agent 协作架构；通过上下文工程优化与"渐进式披露能力"机制，提升单 Agent 智能水平、响应速度与整体效果',
+            '主导业务模型测评与选型——覆盖 Claude（Opus / Sonnet / Haiku）、Gemini（Flash）、GPT 全系列等国际主流模型，以及 MiniMax、Kimi、DeepSeek、通义千问等国内主流模型，从成本、速度、效果三个维度做综合评估，为不同业务场景选择最适配的模型方案',
+            '负责对接 OpenRouter（最大第三方聚合平台）、AWS Bedrock、GCP Vertex AI 及其他中小型供应商，对比折扣与性能持续优化路由策略，平衡 LLM 成本与容量',
+            '基于 LangChain ReAct Agent 设计并实现模型兜底机制——当模型出现超时或报错时，由备用 Agent 自动接替失败任务，显著提升 Lessie 在上游不稳定情况下的线上可用性',
             '负责搜索 Agent 找人能力的工具对接、开发与管理；落地三条端到端垂直搜索场景——KOL 网红达人营销、科技圈 B 端客户精准搜索、学术圈专业搜索',
             '以 AI Native 方式实现 AI 对线上效果问题、系统错误及 Bug 的自动识别与高效修复；参与大数据治理与项目成本上报管理',
             '基于飞书机器人搭建业务智能机器人；开发并维护内部 Skill 平台，通过更新各类 Skill 支持数据看板建设与业务指标可视化',
@@ -326,6 +342,18 @@ export const zh: ResumeData = {
       ],
     },
     {
+      label: 'AI 工程能力',
+      tags: [
+        { text: '多 Agent 协作架构', highlight: true },
+        { text: '上下文工程', highlight: true },
+        { text: '渐进式披露能力', highlight: true },
+        { text: '模型测评', highlight: true },
+        { text: '模型策略', highlight: true },
+        { text: 'Agent 兜底机制', highlight: true },
+        { text: 'AI Native', highlight: true },
+      ],
+    },
+    {
       label: '核心语言',
       tags: [
         { text: 'Python', highlight: true },
@@ -335,9 +363,9 @@ export const zh: ResumeData = {
     {
       label: '框架 & 中间件',
       tags: [
-        { text: 'LangChain', highlight: true },
-        { text: 'LangGraph', highlight: true },
-        { text: 'LangSmith' },
+        { text: 'LangChain' },
+        { text: 'LangGraph' },
+        { text: 'ReAct' },
         { text: 'SpringBoot' },
         { text: 'SpringCloud' },
         { text: 'Kafka' },
@@ -348,10 +376,8 @@ export const zh: ResumeData = {
     {
       label: '工程能力',
       tags: [
-        { text: '多 Agent 协作架构', highlight: true },
-        { text: 'AI Native', highlight: true },
-        { text: '上下文工程' },
         { text: '系统架构设计' },
+        { text: '算法工程化' },
       ],
     },
     {
