@@ -57,6 +57,12 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
             </span>
           );
         }
+        return null;
+      })}
+    </div>
+
+    <div class="contact-strip contact-strip--social">
+      {data.contacts.map((c) => {
         const brand = {
           linkedin: {
             href: `https://www.linkedin.com/in/${c.value}/`,
@@ -76,7 +82,8 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
             label: `u/${c.value}`,
             title: 'Reddit',
           },
-        }[c.type];
+        }[c.type as 'linkedin' | 'github' | 'reddit'];
+        if (!brand) return null;
         return (
           <a
             class="contact-item is-link"
@@ -234,6 +241,10 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
   .contact-item.is-link:hover { color: var(--accent); }
   .contact-item.is-link:hover svg { color: var(--accent); }
   .contact-item.is-link:hover .contact-brand { opacity: 1; }
+
+  /* Second row of the contact block — social handles only. Tighter top
+     margin so the two strips read as one block, not two unrelated sections. */
+  .contact-strip--social { margin-top: 6px; }
 
   .timeline { display: flex; flex-direction: column; }
 
