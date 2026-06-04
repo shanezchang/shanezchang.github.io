@@ -167,7 +167,22 @@ const footerYear = new Date().getFullYear();
     [data-theme="dark"] .theme-toggle .moon { display: block; }
 
     /* ========== Resume hero ========== */
-    .resume-hero { margin-bottom: 64px; }
+    .resume-hero {
+      margin-bottom: 64px;
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .resume-hero__content { flex: 1; min-width: 0; }
+    .resume-hero__avatar {
+      width: 128px;
+      height: 128px;
+      border-radius: 14px;
+      object-fit: cover;
+      border: 1px solid var(--rule);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
     .resume-hero .kicker {
       font-family: 'Geist Mono', monospace;
       font-size: 12px;
@@ -259,7 +274,8 @@ const footerYear = new Date().getFullYear();
     @media (max-width: 720px) {
       .page { padding: 24px 20px 64px; }
       .nav { margin-bottom: 40px; }
-      .resume-hero { margin-bottom: 40px; }
+      .resume-hero { margin-bottom: 40px; gap: 16px; }
+      .resume-hero__avatar { width: 84px; height: 84px; border-radius: 12px; margin-top: 2px; }
       .section { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
       .foot { flex-direction: column; gap: 8px; }
     }
@@ -275,7 +291,8 @@ const footerYear = new Date().getFullYear();
       .nav, .theme-toggle, .lang-switch, .foot, .fade { animation: none !important; opacity: 1 !important; transform: none !important; }
       .nav, .foot { display: none !important; }
       .page { padding: 0 !important; max-width: none; }
-      .resume-hero { margin-bottom: 24px; }
+      .resume-hero { margin-bottom: 24px; gap: 24px; }
+      .resume-hero__avatar { width: 96px; height: 96px; border: 1px solid #ccc; margin-top: 4px; }
       .section { padding: 16px 0; border-color: #ccc; }
       a { color: inherit !important; text-decoration: none !important; }
     }

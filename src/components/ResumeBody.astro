@@ -25,34 +25,83 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
 ---
 
 <section class="resume-hero fade">
-  <p class="kicker">{heroKicker}</p>
-  <h1>{data.name}</h1>
+  <div class="resume-hero__content">
+    <p class="kicker">{heroKicker}</p>
+    <h1>{data.name}</h1>
 
-  <div class="identity-strip">
-    {identityCopy.map((label, i) => (
-      <span class:list={['pill', { 'pill--primary': i === 1 || i === 2 }]}>
-        <Icon name={identityIcons[i]} size={13} />
-        <span>{label}</span>
-      </span>
-    ))}
-  </div>
-
-  <div class="contact-strip">
-    {data.meta.map((item) => <span class="contact-item">{item}</span>)}
-    {data.contacts.map((c) => (
-      c.type === 'email' ? (
-        <a class="contact-item is-link" href={`mailto:${c.value}`}>
-          <Icon name="mail" size={12} />
-          <span>{c.value}</span>
-        </a>
-      ) : (
-        <span class="contact-item">
-          <Icon name="phone" size={12} />
-          <span>{c.value}</span>
+    <div class="identity-strip">
+      {identityCopy.map((label, i) => (
+        <span class:list={['pill', { 'pill--primary': i === 1 || i === 2 }]}>
+          <Icon name={identityIcons[i]} size={13} />
+          <span>{label}</span>
         </span>
-      )
-    ))}
+      ))}
+    </div>
+
+    <div class="contact-strip">
+      {data.meta.map((item) => <span class="contact-item">{item}</span>)}
+      {data.contacts.map((c) => {
+        if (c.type === 'email') {
+          return (
+            <a class="contact-item is-link" href={`mailto:${c.value}`}>
+              <Icon name="mail" size={12} />
+              <span>{c.value}</span>
+            </a>
+          );
+        }
+        if (c.type === 'phone') {
+          return (
+            <span class="contact-item">
+              <Icon name="phone" size={12} />
+              <span>{c.value}</span>
+            </span>
+          );
+        }
+        const brand = {
+          linkedin: {
+            href: `https://www.linkedin.com/in/${c.value}/`,
+            icon: '/assets/linkedin.svg',
+            label: `in/${c.value}`,
+            title: 'LinkedIn',
+          },
+          github: {
+            href: `https://github.com/${c.value}`,
+            icon: '/assets/github.svg',
+            label: `gh/${c.value}`,
+            title: 'GitHub',
+          },
+          reddit: {
+            href: `https://www.reddit.com/user/${c.value}/`,
+            icon: '/assets/reddit.svg',
+            label: `u/${c.value}`,
+            title: 'Reddit',
+          },
+        }[c.type];
+        return (
+          <a
+            class="contact-item is-link"
+            href={brand.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={brand.title}
+          >
+            <img src={brand.icon} alt="" class="contact-brand" width="13" height="13" />
+            <span>{brand.label}</span>
+          </a>
+        );
+      })}
+    </div>
   </div>
+
+  <img
+    class="resume-hero__avatar"
+    src="/assets/avatar.png"
+    alt={lang === 'en' ? `${data.name} portrait` : `${data.name} 头像`}
+    width="128"
+    height="128"
+    loading="eager"
+    decoding="async"
+  />
 </section>
 
 <section class="section fade">
@@ -170,6 +219,13 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
     color: var(--ink-mute);
     flex-shrink: 0;
   }
+  .contact-item .contact-brand {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
   .contact-item.is-link {
     color: var(--ink-soft);
     text-decoration: none;
@@ -177,6 +233,7 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
   }
   .contact-item.is-link:hover { color: var(--accent); }
   .contact-item.is-link:hover svg { color: var(--accent); }
+  .contact-item.is-link:hover .contact-brand { opacity: 1; }
 
   .timeline { display: flex; flex-direction: column; }
 

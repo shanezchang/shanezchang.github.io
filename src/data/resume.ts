@@ -41,7 +41,8 @@ export interface StrengthCategory {
 }
 
 export interface ResumeContact {
-  type: 'email' | 'phone';
+  type: 'email' | 'phone' | 'linkedin' | 'github' | 'reddit';
+  /** For social types: handle only (e.g. 'shanezchang'); URL is constructed in the view. */
   value: string;
 }
 
@@ -90,7 +91,10 @@ export const en: ResumeData = {
   meta: ['4 Years Experience'],
   contacts: [
     { type: 'email', value: 'shane.z.chang@hotmail.com' },
-    { type: 'phone', value: '138-XXXX-1234' },
+    { type: 'phone', value: '185-5557-3888' },
+    { type: 'linkedin', value: 'shanezchang' },
+    { type: 'github', value: 'shanezchang' },
+    { type: 'reddit', value: 'Capital-Feedback6711' },
   ],
   education: {
     school: 'Shenzhen University',
@@ -236,13 +240,13 @@ export const en: ResumeData = {
     {
       label: 'AI Engineering',
       tags: [
+        { text: 'Context Engineering', highlight: true },
         { text: 'Multi-Agent Systems', highlight: true },
-        { text: 'Progressive Disclosure', highlight: true },
-        { text: 'Agent Reliability', highlight: true },
-        { text: 'Context Engineering' },
+        { text: 'AI Native', highlight: true },
+        { text: 'Progressive Disclosure' },
+        { text: 'Agent Reliability' },
         { text: 'Model Evaluation' },
         { text: 'Model Routing & Strategy' },
-        { text: 'AI Native' },
       ],
     },
     {
@@ -256,7 +260,8 @@ export const en: ResumeData = {
     {
       label: 'Frameworks & Infra',
       tags: [
-        { text: 'LangChain' },
+        { text: 'LangChain', highlight: true },
+        { text: 'LangSmith', highlight: true },
         { text: 'LangGraph' },
         { text: 'ReAct' },
         { text: 'SpringBoot' },
@@ -268,21 +273,12 @@ export const en: ResumeData = {
       ],
     },
     {
-      label: 'Engineering',
-      tags: [
-        { text: 'Algorithm Engineering', highlight: true },
-        { text: 'Compliance Engineering', highlight: true },
-        { text: 'System Architecture' },
-        { text: 'Big Data Governance' },
-        { text: 'Distributed Transactions' },
-      ],
-    },
-    {
       label: 'Work Style',
       tags: [
-        { text: '0-to-1 Builder', highlight: true },
-        { text: 'Platform-First', highlight: true },
-        { text: 'Fast Learner' },
+        { text: 'Team Collaboration', highlight: true },
+        { text: 'Continuous Learning', highlight: true },
+        { text: '0-to-1 Builder' },
+        { text: 'Platform-First' },
         { text: 'Result-oriented' },
         { text: 'Self-driven' },
       ],
@@ -360,7 +356,10 @@ export const zh: ResumeData = {
   meta: ['男 / 25岁', '4年工作经验'],
   contacts: [
     { type: 'email', value: 'shane.z.chang@hotmail.com' },
-    { type: 'phone', value: '138-XXXX-1234' },
+    { type: 'phone', value: '185-5557-3888' },
+    { type: 'linkedin', value: 'shanezchang' },
+    { type: 'github', value: 'shanezchang' },
+    { type: 'reddit', value: 'Capital-Feedback6711' },
   ],
   education: {
     school: '深圳大学',
@@ -506,13 +505,13 @@ export const zh: ResumeData = {
     {
       label: 'AI 工程能力',
       tags: [
+        { text: '上下文工程', highlight: true },
         { text: '多 Agent 协作架构', highlight: true },
-        { text: '渐进式披露能力', highlight: true },
-        { text: 'Agent 兜底机制', highlight: true },
-        { text: '上下文工程' },
+        { text: 'AI Native', highlight: true },
+        { text: '渐进式披露能力' },
+        { text: 'Agent 兜底机制' },
         { text: '模型测评' },
         { text: '模型路由与策略' },
-        { text: 'AI Native' },
       ],
     },
     {
@@ -526,7 +525,8 @@ export const zh: ResumeData = {
     {
       label: '框架 & 中间件',
       tags: [
-        { text: 'LangChain' },
+        { text: 'LangChain', highlight: true },
+        { text: 'LangSmith', highlight: true },
         { text: 'LangGraph' },
         { text: 'ReAct' },
         { text: 'SpringBoot' },
@@ -538,21 +538,12 @@ export const zh: ResumeData = {
       ],
     },
     {
-      label: '工程能力',
-      tags: [
-        { text: '算法工程化', highlight: true },
-        { text: '合规级工程', highlight: true },
-        { text: '系统架构设计' },
-        { text: '大数据治理' },
-        { text: '分布式事务' },
-      ],
-    },
-    {
       label: '工作风格',
       tags: [
-        { text: '从 0 到 1 架构', highlight: true },
-        { text: '平台思维', highlight: true },
-        { text: '快速学习' },
+        { text: '高效协作', highlight: true },
+        { text: '持续学习', highlight: true },
+        { text: '从 0 到 1 架构' },
+        { text: '平台思维' },
         { text: '结果导向' },
         { text: '独立解决问题' },
       ],
