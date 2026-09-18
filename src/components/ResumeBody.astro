@@ -1,8 +1,6 @@
 ---
 import type { ResumeData } from '../data/resume';
 import ExperienceItem from './ExperienceItem.astro';
-import StrengthGrid from './StrengthGrid.astro';
-// import HighlightStack from './HighlightStack.astro'; // re-enable when restoring the Highlights block below
 import Icon from './Icon.astro';
 
 interface Props {
@@ -22,6 +20,7 @@ const identityCopy =
 const identityIcons = ['map-pin', 'server', 'bot', 'code-2', 'database'] as const;
 
 const heroKicker = lang === 'en' ? '// resume' : '// 简历';
+
 ---
 
 <section class="resume-hero fade">
@@ -76,13 +75,7 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
             label: `gh/${c.value}`,
             title: 'GitHub',
           },
-          reddit: {
-            href: `https://www.reddit.com/user/${c.value}/`,
-            icon: '/assets/reddit.svg',
-            label: `u/${c.value}`,
-            title: 'Reddit',
-          },
-        }[c.type as 'linkedin' | 'github' | 'reddit'];
+        }[c.type as 'linkedin' | 'github'];
         if (!brand) return null;
         return (
           <a
@@ -98,6 +91,8 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
         );
       })}
     </div>
+
+    <p class="summary">{data.summary}</p>
   </div>
 
   <img
@@ -129,25 +124,33 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
   </div>
 </section>
 
-<section class="section fade">
-  <h2>{data.sectionTitles.strengths}</h2>
-  <div class="body">
-    <StrengthGrid items={data.strengths} lang={lang} />
-  </div>
-</section>
-
-{/*
-  Highlights section temporarily hidden by request. The data still lives in
-  resume.ts (`highlights` field) and the HighlightStack component is intact —
-  to re-enable, restore this block and re-import HighlightStack at the top.
-
+{(data.publications ?? []).length > 0 && (
   <section class="section fade">
-    <h2>{data.sectionTitles.highlights}</h2>
+    <h2>{data.sectionTitles.publications}</h2>
     <div class="body">
-      <HighlightStack items={data.highlights} lang={lang} />
+      {(data.publications ?? []).map((pub) => (
+        <article class="pub">
+          <h3 class="pub-title">{pub.title}</h3>
+          <div class="pub-meta">
+            {pub.venue && <span class="pub-venue">{pub.venue}</span>}
+            {pub.authorship && <span class="pub-authorship">{pub.authorship}</span>}
+          </div>
+          <p class="pub-summary">{pub.summary}</p>
+          {pub.links && (
+            <div class="pub-links">
+              {pub.links.map((l) => (
+                <a class="pub-link" href={l.url} target="_blank" rel="noopener noreferrer">
+                  <span>{l.label}</span>
+                  <Icon name="arrow-up-right" size={11} />
+                </a>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
     </div>
   </section>
-*/}
+)}
 
 <section class="section fade">
   <h2>{data.sectionTitles.experience}</h2>
@@ -165,6 +168,72 @@ const heroKicker = lang === 'en' ? '// resume' : '// 简历';
 </section>
 
 <style>
+  /* Positioning statement — the first thing a recruiter reads. Kept to one
+     paragraph; if it needs two, the claim is not sharp enough yet. */
+  .summary {
+    margin: 22px 0 0;
+    max-width: 62ch;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+
+  .pub + .pub { margin-top: 22px; }
+  .pub-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .pub-meta {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+  }
+  .pub-venue { color: var(--accent); }
+  .pub-summary {
+    margin: 10px 0 0;
+    max-width: 68ch;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .pub-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pub-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 9px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .pub-link svg { color: var(--ink-mute); transition: color 0.2s; }
+  .pub-link:hover { color: var(--accent); border-color: var(--accent); }
+  .pub-link:hover svg { color: var(--accent); }
+
+  @media print {
+    .pub { break-inside: avoid; page-break-inside: avoid; }
+    .summary { color: #333 !important; }
+    .pub-venue { color: #111 !important; }
+    .pub-summary { color: #333 !important; }
+    .pub-link { color: #555 !important; border-color: #aaa !important; }
+  }
+
   /* Identity strip — iconified pills, slightly elevated. Two pills are marked
      `pill--primary` (Backend + AI Agents) to anchor the rest visually. */
   .identity-strip {

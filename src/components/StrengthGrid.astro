@@ -81,6 +81,7 @@ const { items, lang } = Astro.props;
   }
 
   @media print {
+    .strength-row { grid-template-columns: 92px 1fr; gap: 10px; break-inside: avoid; page-break-inside: avoid; }
     .s-tag { background: transparent !important; color: #333 !important; border-color: #aaa !important; }
     .s-tag.highlight { color: #000 !important; border-color: #000 !important; }
   }

@@ -27,11 +27,20 @@ const hasMultipleProjects = entry.projects.length > 1;
             class:list={['company-logo', { 'is-mono': entry.monoLogo }]}
           />
         )}
-        <span class="company">{entry.company}</span>
+        {entry.companyUrl ? (
+          <a class="company company-link" href={entry.companyUrl} target="_blank" rel="noopener">
+            {entry.company}
+            <Icon name="arrow-up-right" size={11} />
+          </a>
+        ) : (
+          <span class="company">{entry.company}</span>
+        )}
         <span class="role">{entry.role}</span>
       </div>
       <span class="date">{entry.date}</span>
     </div>
+
+    {entry.department && <div class="exp-dept">{entry.department}</div>}
 
     <div class="exp-tags">
       {entry.tags.map((tag) => <span class="tag">{tag}</span>)}
@@ -124,6 +133,16 @@ const hasMultipleProjects = entry.projects.length > 1;
     color: var(--ink);
     letter-spacing: -0.005em;
   }
+  .company-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .company-link svg { color: var(--ink-mute); transition: color 0.2s; }
+  .company-link:hover { color: var(--accent); }
+  .company-link:hover svg { color: var(--accent); }
   .company-logo {
     width: 18px;
     height: 18px;
@@ -151,6 +170,14 @@ const hasMultipleProjects = entry.projects.length > 1;
     letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+  }
+
+  .exp-dept {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.01em;
+    margin: -2px 0 12px;
   }
 
   .exp-tags {
@@ -255,9 +282,31 @@ const hasMultipleProjects = entry.projects.length > 1;
     .dot { background: #111 !important; border-color: #111 !important; box-shadow: none !important; }
     .line { background: #aaa !important; }
     .tag, .role { background: transparent !important; color: #333 !important; border-color: #aaa !important; }
+    .exp-dept { color: #555 !important; }
     .project-detail li::before { background: #555 !important; }
     .project-link { background: transparent !important; border-color: #aaa !important; color: #555 !important; }
-    .timeline-item { padding-bottom: 18px; }
+    /* Tighten the marker gutter — on paper the timeline is decoration, not
+       navigation. Keep each project block whole; let a long company entry
+       split between pages rather than jumping wholesale to the next one. */
+    .timeline-item { grid-template-columns: 9px 1fr; gap: 11px; padding-bottom: 16px; }
+    .dot { width: 7px; height: 7px; border-width: 1.5px; }
+    .project { break-inside: avoid; page-break-inside: avoid; }
+    .project-head { break-after: avoid; page-break-after: avoid; }
+    .exp-header { break-after: avoid; page-break-after: avoid; }
+    .exp-dept, .exp-tags {
+      break-before: avoid;
+      page-break-before: avoid;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    /* Print density: the screen version can breathe, a PDF a recruiter scrolls
+       through cannot. Tighten type and rhythm without shrinking below 12px. */
+    .project-detail { font-size: 12.5px; line-height: 1.6; }
+    .project-detail li { margin-bottom: 5px; padding-left: 14px; }
+    .project-detail li::before { top: 8px; }
+    .project-name { font-size: 12.5px; }
+    .project { margin-bottom: 12px; }
+    .exp-tags { margin-bottom: 10px; gap: 5px; }
     .projects.has-many .project + .project { border-top-color: #ccc !important; }
   }
 </style>

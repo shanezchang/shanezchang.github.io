@@ -109,6 +109,16 @@ const { items, lang } = Astro.props;
   @media print {
     .num { color: #555 !important; }
     .evidence li::before { background: #555 !important; }
-    .highlight { padding: 14px 0; border-color: #ccc !important; }
+    .highlight {
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      border-color: #ccc !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .title { font-size: 13px; }
+    .tagline { font-size: 12px; }
+    .evidence { font-size: 12.5px; line-height: 1.55; }
   }
 </style>
