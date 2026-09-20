@@ -799,7 +799,7 @@ export const zhOnePage: OnePageResume = {
     },
     {
       title: 'lessie-skill',
-      inline: '面向 Claude Code / Codex 的找人与信息增强 Skill',
+      inline: 'Claude Code / Codex 的找人与信息增强 Skill',
       links: [{ label: 'GitHub', url: 'https://github.com/LessieAI/lessie-skill' }],
     },
     {
@@ -823,7 +823,6 @@ export const zhOnePage: OnePageResume = {
           bullets: [
             '主导 Agent 工具调用效果优化：重构工具的组织方式、对 Skill 知识做渐进式披露、通过 middleware 注入运行时上下文，KOL 找人场景评测中工具调用通过率 **26% → 63%**',
             '主导核心产品架构演进，从早期流程编排升级为基于 LangChain 与 LangGraph 的多 Agent 协作架构，并持续优化上下文工程',
-            '负责搜索 Agent 的工具对接与生命周期管理，打通异构数据源、搜索 API 与各类 enrichment 工具，构成找人场景的能力底座',
             '落地 KOL 达人营销、科技圈 B 端客户搜索、学术圈专业搜索三条端到端垂直场景，每条配套针对性的召回与排序策略',
           ],
         },
@@ -872,11 +871,12 @@ export const zhOnePage: OnePageResume = {
       logo: '/assets/tencent-logo.avif',
       role: '后端 / 数据开发 · CSIG 安全产品二部',
       date: '2022.07 – 2023.08',
-      stack: 'Python、Go、Kafka、K8s、Redis、Hive、PySpark、SQL',
+      scope: '内容安全方向：把全网违规广告与金融传销线索做成可交付的数据产品，服务政府监管、品牌维权与风控业务',
+      stack: 'Python、Go、Kafka、K8s、Redis、Airtest、MitmProxy、Hive、PySpark、SQL',
       bullets: [
-        '**大数据采集后端**：基于 Kafka + K8s 搭建采集主链路，日均 **1 亿+** 条广告数据，覆盖 Web / APP / 小程序；Redis 布隆过滤器做海量 URL 去重，误判率 < 0.1%',
-        '**数据分析与风控**：以 SQL / PySpark 治理金融舆情数据链路；基于 1 亿+ 企业主体构建 Trie 实体匹配，传销线索 **50 → 2000 条/天**，有效识别率 30% → 95%',
-        '**后端服务**：用 Go 开发腾讯云品牌保护平台后端，负责接口、定时任务与策略模块，并把小程序监测能力迁移到该场景',
+        '**违规广告监测（交付政府监管）**：Kafka + K8s 主链路日均 **1 亿+** 条广告数据，覆盖 Web / APP / 小程序；落地页截图加水印与时间戳，作为法律证据交付监管平台',
+        '**移动端采集与海量去重**：Airtest + ADB **50+ 设备**并发采集 APP 与小程序广告，自动化处理重启、装包与账号池调度；Redis 布隆过滤器对日均 1 亿+ URL 去重，误判率 **< 0.1%**',
+        '**金融反传销与品牌维权**：Trie 匹配 1 亿+ 企业主体，把违规文本关联到具体公司，传销线索 **50 → 2000 条/天**、识别率 **30% → 95%**；Go 开发品牌保护后端，每品牌 **50 条/天** 侵权线索',
       ],
     },
   ],
@@ -943,7 +943,6 @@ export const enOnePage: OnePageResume = {
           bullets: [
             'Led tool-calling optimization — restructured tools, progressive disclosure of skill knowledge, middleware context injection — lifting pass rate from **26% to 63%** on the KOL people-search eval',
             'Moved the product from procedural workflows to multi-agent collaboration on LangChain / LangGraph',
-            'Own the search agent\'s tool integration and lifecycle: data sources, search APIs, enrichment tools',
             'Shipped three vertical flows — KOL outreach, B2B prospecting, academic search — each with its own retrieval and ranking',
           ],
         },
@@ -992,11 +991,12 @@ export const enOnePage: OnePageResume = {
       logo: '/assets/tencent-logo.avif',
       role: 'Backend / Data Engineer · CSIG',
       date: 'Jul 2022 – Aug 2023',
-      stack: 'Python, Go, Kafka, K8s, Redis, Hive, PySpark, SQL',
+      scope: 'Content safety: turning internet-wide ad violations and financial-fraud signals into deliverable data products for regulators, brand owners and risk teams',
+      stack: 'Python, Go, Kafka, K8s, Redis, Airtest, MitmProxy, Hive, PySpark, SQL',
       bullets: [
-        '**Big-data collection**: Kafka + K8s pipeline ingesting **100M+** ad records a day across web, app and Mini Program; Redis Bloom-filter dedup under 0.1% false positives',
-        '**Analytics & risk control**: SQL / PySpark pipeline governance; Trie matching over 100M+ companies lifted fraud leads from **50 to 2,000/day**, valid identification 30% → 95%',
-        '**Backend services**: Go backend of Tencent Cloud Brand Protection — APIs, scheduled jobs, strategy modules',
+        '**Ad-violation monitoring (delivered to regulators)**: Kafka + K8s pipeline ingesting **100M+** ad records a day across web, app and Mini Program; watermarked, timestamped landing-page captures delivered as admissible evidence',
+        '**Mobile collection & dedup at scale**: Airtest + ADB across **50+ concurrent devices** for app and Mini Program ads, automating restarts, installs and account pools; Redis Bloom-filter dedup on 100M+ daily URLs, **under 0.1%** false positives',
+        '**Fraud & brand protection**: Trie matching over 100M+ companies tied violation text to real firms — fraud leads **50 → 2,000/day**, valid identification **30% → 95%**; built the Go backend of Tencent Cloud Brand Protection, ~**50 leads/day per brand**',
       ],
     },
   ],
