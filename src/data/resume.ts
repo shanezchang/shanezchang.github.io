@@ -230,7 +230,7 @@ export const en: ResumeData = {
       companyUrl: 'https://www.tencent.com/',
       companyLogo: '/assets/tencent-logo.avif',
       role: 'Backend / Data Engineer',
-      date: 'May 2021 - Jul 2023',
+      date: 'Jul 2022 - Jul 2023',
       department: 'CSIG · Security Product Dept. II',
       tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
@@ -528,7 +528,7 @@ export const zh: ResumeData = {
       companyUrl: 'https://www.tencent.com/',
       companyLogo: '/assets/tencent-logo.avif',
       role: '后端 / 数据开发',
-      date: '2021.05 - 2023.07',
+      date: '2022.07 - 2023.07',
       department: 'CSIG · 安全产品二部',
       tags: ['Selenium', 'Airtest', 'MitmProxy', 'Kafka', 'K8s', 'Redis', 'Hive', 'PySpark', 'Go'],
       projects: [
@@ -871,7 +871,7 @@ export const zhOnePage: OnePageResume = {
       company: '腾讯科技（深圳）有限公司',
       logo: '/assets/tencent-logo.avif',
       role: '后端 / 数据开发 · CSIG 安全产品二部',
-      date: '2021.05 – 2023.07',
+      date: '2022.07 – 2023.07',
       stack: 'Python、Go、Kafka、K8s、Redis、Hive、PySpark、SQL',
       bullets: [
         '**大数据采集后端**：基于 Kafka + K8s 搭建采集主链路，日均 **1 亿+** 条广告数据，覆盖 Web / APP / 小程序；Redis 布隆过滤器做海量 URL 去重，误判率 < 0.1%',
@@ -991,7 +991,7 @@ export const enOnePage: OnePageResume = {
       company: 'Tencent Technology (Shenzhen) Co., Ltd.',
       logo: '/assets/tencent-logo.avif',
       role: 'Backend / Data Engineer · CSIG',
-      date: 'May 2021 – Jul 2023',
+      date: 'Jul 2022 – Jul 2023',
       stack: 'Python, Go, Kafka, K8s, Redis, Hive, PySpark, SQL',
       bullets: [
         '**Big-data collection**: Kafka + K8s pipeline ingesting **100M+** ad records a day across web, app and Mini Program; Redis Bloom-filter dedup under 0.1% false positives',
