@@ -875,7 +875,7 @@ export const zhOnePage: OnePageResume = {
       stack: 'Python、Go、Kafka、K8s、Redis、Airtest、MitmProxy、PySpark、SQL',
       bullets: [
         '**面向监管的违规广告取证**：建成覆盖 Web / APP / 小程序的采集体系（Kafka + K8s 主链路日均 **1 亿+** 条、Airtest 50+ 设备并发抓移动端、布隆过滤器去重），并把落地页截图做成带水印与时间戳的证据链，直接交付政府监管平台',
-        '**面向风控与品牌方的线索生产**：用 Trie 把违规文本关联到 1 亿+ 企业主体，金融传销线索 **50 → 2000 条/天**、有效识别率 **30% → 95%**；同一套能力用 Go 落到腾讯云品牌保护，每品牌 **50 条/天** 侵权线索',
+        '**面向风控与品牌方的线索生产**：用 Trie 把违规文本关联到 1 亿+ 企业主体，让金融传销线索从零星检出变成规模化日更交付，有效主体识别率 **30% → 95%**；同一套能力用 Go 落到腾讯云品牌保护，为品牌方稳定产出可直接处置的侵权线索',
       ],
     },
   ],
@@ -994,7 +994,7 @@ export const enOnePage: OnePageResume = {
       stack: 'Python, Go, Kafka, K8s, Redis, Airtest, MitmProxy, PySpark, SQL',
       bullets: [
         '**Evidence for regulators**: built collection across web, app and Mini Program (Kafka + K8s at **100M+** records a day, Airtest on 50+ concurrent devices, Bloom-filter dedup) and turned landing-page captures into watermarked, timestamped evidence delivered to government platforms',
-        '**Leads for risk teams and brand owners**: Trie matching tied violation text to **100M+** companies — fraud leads **50 → 2,000/day**, valid identification **30% → 95%**; the same capability shipped in Go as Tencent Cloud Brand Protection, ~**50 leads/day per brand**',
+        '**Leads for risk teams and brand owners**: Trie matching tied violation text to **100M+** companies, turning fraud detection from sporadic hits into a steady daily feed with valid identification **30% → 95%**; the same capability shipped in Go as Tencent Cloud Brand Protection, giving brand owners actionable leads every day',
       ],
     },
   ],
