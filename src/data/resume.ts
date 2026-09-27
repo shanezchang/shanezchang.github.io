@@ -125,7 +125,7 @@ export const en: ResumeData = {
   name: 'Shane Chang',
   meta: ['4 Years Experience'],
   summary:
-    'Backend and data engineer turned AI Agent engineer. Four years shipping production systems — internet-scale monitoring at Tencent, a self-built WMS in cross-border logistics — and now multi-agent architecture, model evaluation and routing, and agent reliability at Superlinear. Led People Search Bench, an open benchmark accepted to EMNLP 2026 (Industry Track).',
+    'AI Agent engineer with end-to-end depth across backend, big data and agents — from architecture, tool and context engineering and evaluation to production reliability. At Superlinear I own the core agent system of Lessie AI, an AI people-search product, and am corresponding author of its open benchmark PeopleSearchBench, accepted to EMNLP 2026 (Industry Track). Previously: WMS backend at Yangteng; data collection and risk analytics at Tencent.',
   contacts: [
     { type: 'email', value: 'shane.z.chang@gmail.com' },
     { type: 'phone', value: '185-5557-3888' },
@@ -423,7 +423,7 @@ export const zh: ResumeData = {
   name: '张帅',
   meta: ['男 / 25岁', '4年工作经验'],
   summary:
-    '4 年后端与数据工程经验，现在做 AI Agent 的生产化落地：多智能体架构、模型评测与供应商路由、Agent 可靠性。此前在腾讯做互联网级内容监测，在跨境仓储公司自建 WMS 替换 Odoo。主导的开源评测基准 People Search Bench 被 EMNLP 2026 Industry Track 录用。',
+    'AI Agent 研发工程师，具备后端、大数据与智能体全链路工程能力，能独立推进 Agent 架构、工具与上下文工程、效果评测到线上稳定性的完整落地。现于超线性科技负责找人 AI Agent（Lessie AI）核心系统，主导多 Agent 架构、工具调用优化与评测体系建设，开源评测基准 PeopleSearchBench 被 EMNLP 2026 Industry Track 录用（通讯作者）。此前深耕后端与大数据，先后在扬腾自研仓储 WMS、在腾讯做亿级数据采集与风控。',
   contacts: [
     { type: 'email', value: 'shane.z.chang@gmail.com' },
     { type: 'phone', value: '185-5557-3888' },
