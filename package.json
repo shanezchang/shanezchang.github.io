@@ -5,9 +5,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "test": "npm run build && npm run test:artifact",
+    "test:artifact": "node --test tests/*.test.mjs",
+    "test:browser": "playwright test"
   },
   "dependencies": {
     "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@playwright/test": "1.64.0",
+    "@types/node": "22.20.5",
+    "cheerio": "1.2.0",
+    "typescript": "5.9.3",
+    "yaml": "2.9.1"
   }
 }

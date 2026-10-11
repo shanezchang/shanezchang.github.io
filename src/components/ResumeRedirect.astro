@@ -1,0 +1,19 @@
+---
+interface Props { lang: 'en' | 'zh' }
+const { lang } = Astro.props;
+const target = `/resume/${lang}/`;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content={`0;url=${target}`} />
+  <link rel="canonical" href={new URL(target, Astro.site).href} />
+  <title>{lang === 'zh' ? '简历 — 张帅' : 'Resume — Shane Chang'}</title>
+</head>
+<body>
+  <p>{lang === 'zh' ? '前往简历：' : 'Continue to the resume: '}<a href={target}>{target}</a></p>
+</body>
+</html>

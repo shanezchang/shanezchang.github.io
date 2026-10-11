@@ -1,0 +1,16 @@
+---
+import { publicPages, resumeAlternates } from '../data/search';
+
+interface Props { path: string }
+const { path } = Astro.props;
+if (!Astro.site) throw new Error('Set the production site URL in astro.config.mjs');
+if (!publicPages.some((page) => page.path === path)) {
+  throw new Error(`Search metadata requested for an unlisted route: ${path}`);
+}
+const canonical = new URL(path, Astro.site).href;
+const alternates = path === '/' ? [] : resumeAlternates;
+---
+<link rel="canonical" href={canonical} />
+{alternates.map((alternate) => (
+  <link rel="alternate" hreflang={alternate.lang} href={new URL(alternate.path, Astro.site).href} />
+))}

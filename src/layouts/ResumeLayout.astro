@@ -1,4 +1,5 @@
 ---
+import SearchMetadata from '../components/SearchMetadata.astro';
 // Shared chrome for the resume pages: head, fonts, theme tokens, nav, grid bg, footer.
 // Mirrors the design tokens in src/pages/index.astro so the resume reads as a
 // second-floor of the same site rather than a separate page.
@@ -28,6 +29,7 @@ const footerYear = new Date().getFullYear();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {description && <meta name="description" content={description} />}
   <title>{title}</title>
+  <SearchMetadata path={`/resume/${lang}/`} />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -281,6 +283,10 @@ const footerYear = new Date().getFullYear();
       .foot { flex-direction: column; gap: 8px; }
     }
 
+    @media (max-width: 360px) {
+      .nav-actions { gap: 16px; }
+    }
+
     /* ========== Print: simplified, monochrome, A4-friendly ========== */
     /* Print/PDF target is A4 — the default in China and Hong Kong. Without this
        the browser falls back to Letter, which reflows every page break. */
@@ -290,6 +296,20 @@ const footerYear = new Date().getFullYear();
     }
 
     @media print {
+      /* Paper uses one palette regardless of the saved screen theme. */
+      :root, [data-theme="dark"] {
+        --bg: #fff;
+        --bg-elev: #fff;
+        --ink: #0a0a0a;
+        --ink-soft: #525252;
+        --ink-mute: #666;
+        --rule: #e8e8e8;
+        --rule-soft: #f0f0f0;
+        --accent: #111;
+        --grid: transparent;
+        --accent-glow: transparent;
+      }
+      .company-logo.is-mono { filter: none !important; }
       body {
         background: #fff !important;
         color: #111 !important;
