@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shane Chang — Studio</title>
+  <meta name="robots" content="noindex" />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -602,7 +603,7 @@
   </main>
 
   <script>
-    document.querySelectorAll('.work-card, .read-card').forEach(c => {
+    document.querySelectorAll<HTMLElement>('.work-card, .read-card').forEach(c => {
       c.addEventListener('mousemove', e => {
         const r = c.getBoundingClientRect();
         c.style.setProperty('--mx', (e.clientX - r.left) + 'px');

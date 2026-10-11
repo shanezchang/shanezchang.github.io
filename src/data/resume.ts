@@ -762,6 +762,8 @@ export interface OnePageResume {
     date: string;
     /** Company-level stack, for roles described with flat bullets. */
     stack?: string;
+    /** Existing business-context line, shared by HTML and plain-text exports. */
+    scope?: string;
     /** Flat bullets — used by earlier roles. */
     bullets?: string[];
     /** Project breakdown — used where depth matters (the current role). */

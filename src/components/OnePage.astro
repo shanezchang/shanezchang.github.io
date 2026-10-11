@@ -153,6 +153,9 @@ const rich = (s: string) =>
 
     @media print {
       body { background: #fff; }
+      /* Preserve fractional glyph advances in small English print text;
+         Linux's default rounding can add lines without changing font size. */
+      body.lang-en { text-rendering: geometricPrecision; }
       .sheet { margin: 0; box-shadow: none; }
     }
     @media screen and (max-width: 820px) {

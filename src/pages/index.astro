@@ -1,4 +1,5 @@
 ---
+import SearchMetadata from '../components/SearchMetadata.astro';
 // Personal landing page.
 // Sharp typographic minimalism, animated grid background, light/dark toggle.
 ---
@@ -9,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Shane Chang — software engineer based in Shenzhen. Backend systems, internal platforms, and quiet tools.">
   <title>Shane Chang</title>
+  <SearchMetadata path="/" />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -394,6 +396,9 @@
       .work-grid { grid-template-columns: 1fr 1fr; }
       .foot { flex-direction: column; gap: 8px; }
     }
+    @media (max-width: 360px) {
+      .nav-actions { gap: 16px; }
+    }
     @media (max-width: 480px) {
       .work-grid { grid-template-columns: 1fr; }
     }
@@ -423,7 +428,7 @@
 
     <!-- Hero -->
     <section class="hero fade">
-      <p class="kicker">// shanezchang.io</p>
+      <p class="kicker">// shanezchang.github.io</p>
       <h1>Shane Chang</h1>
       <p class="tagline">
         <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -486,7 +491,7 @@
   </main>
 
   <script>
-    document.getElementById('themeBtn').addEventListener('click', () => {
+    document.getElementById('themeBtn')?.addEventListener('click', () => {
       const root = document.documentElement;
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
