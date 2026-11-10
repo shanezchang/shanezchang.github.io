@@ -12,9 +12,10 @@ for (const language of ['en', 'zh']) for (const onePage of [false, true]) for (c
     page.on('pageerror', (error) => errors.push(error.message));
     await page.emulateMedia({ colorScheme: scheme });
     expect((await page.goto(path)).status()).toBe(200);
-    const fonts = await expectLoadedFonts(page);
+    await expectLoadedFonts(page);
     if (!onePage) await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
     await page.emulateMedia({ media: 'print' });
+    const fonts = await expectLoadedFonts(page, 'print');
     // Wait for existing transitions rather than injecting visual CSS.
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
     const observed = await page.locator('main').evaluate((main) => {
@@ -65,12 +66,15 @@ for (const language of ['en', 'zh']) for (const onePage of [false, true]) for (c
         yMax: (anchor.yMin + anchor.yMax + logo.height * 0.75) / 2 };
       return { ...logo, box, darkFraction: box ? pdf.darkFraction(box) : 0 };
     });
-    const evidence = { path, scheme, fonts, ...observed, pages: pdf.pages, missing, outOfBounds, headingInk, logoInk, errors };
+    const evidence = { path, scheme, fonts, pdfFonts: pdf.fonts, ...observed, pages: pdf.pages, missing, outOfBounds, headingInk, logoInk, errors };
     await writeFile(testInfo.outputPath('print.json'), JSON.stringify(evidence, null, 2));
     await writeFile(testInfo.outputPath('pdf-text.txt'), pdf.text);
     // Soft assertions retain all PDF/raster evidence even in the RED case.
     expect.soft(observed.background).toBe('rgb(255, 255, 255)');
     expect.soft(pdf.pages.length).toBe(onePage ? 1 : 4);
+    expect.soft(pdf.fonts).toMatch(/Geist/);
+    expect.soft(pdf.fonts).toMatch(/GeistMono/);
+    expect.soft(pdf.fonts).not.toMatch(/Maple/);
     for (const sheet of pdf.pages) {
       expect.soft(sheet.width).toBeCloseTo(594.96, 1);
       expect.soft(sheet.height).toBeCloseTo(841.92, 1);

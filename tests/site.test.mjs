@@ -114,9 +114,8 @@ for (const [path] of formal) {
     const $ = await html(path);
     for (const el of $('a[href]').toArray()) assert.doesNotMatch($(el).attr('href'), /example\.(com|org)|^#$/);
     assert.equal($('script[data-sdkn], script[src*="analytics"], script[src*="googletagmanager"]').length, 0);
-    const fonts = $('link[href*="fonts.googleapis.com/css2"]').attr('href');
-    assert.match(fonts, /family=Geist:/);
-    assert.match(fonts, /family=Geist\+Mono:/);
+    assert.equal($('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]').length, 0);
+    assert.equal($('link[rel="preload"][as="font"]').attr('href'), '/fonts/maple-latin.woff2');
   });
 }
 

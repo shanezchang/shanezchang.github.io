@@ -1,0 +1,52 @@
+@import './maple-cn.css';
+
+@font-face {
+  font-family: 'Maple Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('/fonts/maple-latin.woff2') format('woff2');
+}
+
+/* Courier's 0.6em advance matches Maple's Latin advance. The local CJK face
+   uses 1.2em cells too, so swapping the Chinese subset preserves line lengths. */
+@font-face {
+  font-family: 'Maple CJK Fallback';
+  src: local('PingFangSC-Regular'), local('Microsoft YaHei'), local('NotoSansCJKsc-Regular'), local('WenQuanYiZenHei');
+  size-adjust: 120%;
+  ascent-override: 85%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  unicode-range: U+2E80-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+:root {
+  --font-screen: 'Maple Mono', 'Maple Mono CN', 'Maple CJK Fallback', 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+  --font-body: var(--font-screen);
+  --font-mono: var(--font-screen);
+}
+
+@media screen {
+  body { font-synthesis: none; }
+}
+
+/* Keep the existing paper metrics and its independent sans/mono hierarchy.
+   These fonts are fetched only for print, without a Google Fonts connection. */
+@media print {
+  @font-face {
+    font-family: 'Geist';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url('/fonts/geist-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url('/fonts/geist-mono-latin.woff2') format('woff2');
+  }
+  :root {
+    --font-body: 'Geist', -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono: 'Geist Mono', monospace;
+  }
+}

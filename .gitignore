@@ -4,3 +4,4 @@ dist/
 CLAUDE.md
 test-results/
 playwright-report/
+.qa/
