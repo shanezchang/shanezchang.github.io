@@ -57,5 +57,6 @@ export async function inspectPdf(file, prefix) {
     }
     return count ? dark / count : 0;
   };
-  return { text, pages, match, darkFraction };
+  const fonts = execFileSync('pdffonts', [file], { encoding: 'utf8' });
+  return { text, pages, match, darkFraction, fonts };
 }

@@ -37,7 +37,7 @@ const { items, lang } = Astro.props;
   }
 
   .strength-label {
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 11px;
     color: var(--ink-mute);
     letter-spacing: 0.04em;
@@ -48,7 +48,7 @@ const { items, lang } = Astro.props;
   .strength-label[data-lang="zh"] {
     text-transform: none;
     letter-spacing: 0.06em;
-    font-family: 'Geist', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-body);
   }
 
   .strength-tags {
@@ -58,7 +58,7 @@ const { items, lang } = Astro.props;
   }
 
   .s-tag {
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 11px;
     color: var(--ink-soft);
     background: var(--bg-elev);

@@ -26,7 +26,14 @@ for (const route of routes) for (const width of [320, 390, 1280]) for (const sch
     await expect(page.locator('h1')).toHaveText(route.title);
     const dimensions = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.width + 1);
-    await expect(page.locator('body')).toHaveCSS('font-family', /Geist/);
+    if (route.theme && route.path.startsWith('/resume/') && width < 720) {
+      const measure = await page.locator('.summary').evaluate((summary) => ({
+        summary: summary.getBoundingClientRect().width,
+        hero: document.querySelector('.resume-hero').getBoundingClientRect().width,
+      }));
+      expect(Math.abs(measure.summary - measure.hero), 'mobile summary must use the full reading width').toBeLessThan(1);
+    }
+    await expect(page.locator('body')).toHaveCSS('font-family', /Maple/);
     expect(await page.locator('img').evaluateAll((images) => images.filter((image) => !image.complete || !image.naturalWidth).map((image) => image.src))).toEqual([]);
     if (route.theme) {
       await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
@@ -107,6 +114,7 @@ for (const path of ['/resume/en/', '/resume/zh/', '/resume/en-1p/', '/resume/zh-
     await page.goto(path);
     await expectLoadedFonts(page);
     await page.emulateMedia({ media: 'print' });
+    await expectLoadedFonts(page, 'print');
     const onePage = path.includes('-1p');
     const content = await page.locator('main').innerText();
     for (const term of path.includes('/zh') ? ['张帅', '深圳大学', '腾讯', '扬腾', 'PeopleSearchBench'] : ['Shane Chang', 'Shenzhen University', 'Tencent', 'Yangteng', 'PeopleSearchBench']) expect(content).toContain(term);

@@ -1,4 +1,5 @@
 ---
+import SiteFonts from '../components/SiteFonts.astro';
 import SearchMetadata from '../components/SearchMetadata.astro';
 // Personal landing page.
 // Sharp typographic minimalism, animated grid background, light/dark toggle.
@@ -12,9 +13,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
   <title>Shane Chang</title>
   <SearchMetadata path="/" />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <SiteFonts />
 
   <script>
     // Set theme before paint to avoid FOUC.
@@ -60,7 +59,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     html, body {
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Geist', -apple-system, sans-serif;
+      font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
       transition: background 0.4s ease, color 0.4s ease;
     }
@@ -94,7 +93,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 13px;
       color: var(--ink);
       font-weight: 500;
@@ -115,7 +114,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     .nav-actions { display: flex; gap: 24px; align-items: center; }
 
     .nav a {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-soft);
       text-decoration: none;
@@ -146,7 +145,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     .hero { margin-bottom: 96px; }
 
     .hero .kicker {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-mute);
       letter-spacing: 0.02em;
@@ -156,13 +155,13 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     .hero h1 {
       font-weight: 700;
       font-size: clamp(64px, 14vw, 192px);
-      line-height: 0.88;
-      letter-spacing: -0.05em;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
       margin-bottom: 28px;
     }
 
     .hero .tagline {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 14px;
       line-height: 1.55;
       color: var(--ink-soft);
@@ -188,7 +187,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       align-items: center;
       gap: 12px;
       padding: 14px 22px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 13px;
       letter-spacing: 0.02em;
       color: var(--ink);
@@ -212,7 +211,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       color: var(--bg);
     }
     .hero-cta-alt {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-mute);
       text-decoration: none;
@@ -235,7 +234,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     }
 
     .section h2 {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       font-weight: 500;
       color: var(--ink-mute);
@@ -251,7 +250,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
     .section-label { display: flex; flex-direction: column; gap: 8px; }
 
     .contact-line {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--ink-soft);
       text-decoration: none;
@@ -268,7 +267,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       align-items: center;
       gap: 8px;
       padding: 8px 14px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-soft);
       text-decoration: none;
@@ -341,7 +340,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       background: var(--bg-elev);
       border: 1px solid var(--rule);
       border-radius: 6px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--ink-soft);
       opacity: 0;
@@ -351,7 +350,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
 
     .work-meta { display: flex; flex-direction: column; gap: 4px; }
     .work-title { font-size: 14px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
-    .work-tags { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--ink-mute); letter-spacing: 0.02em; }
+    .work-tags { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.02em; }
 
     /* ========== Footer ========== */
     .foot {
@@ -360,7 +359,7 @@ import SearchMetadata from '../components/SearchMetadata.astro';
       border-top: 1px solid var(--rule);
       display: flex;
       justify-content: space-between;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--ink-mute);
     }

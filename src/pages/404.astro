@@ -1,3 +1,6 @@
+---
+import SiteFonts from '../components/SiteFonts.astro';
+---
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,9 +9,7 @@
   <meta name="robots" content="noindex" />
   <title>Page not found — Shane Chang</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <SiteFonts />
   <script is:inline>
     try {
       document.documentElement.dataset.theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -19,9 +20,9 @@
     @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0a0a0a; --ink: #fafafa; --ink-soft: #a3a3a3; --rule: #1f1f1f; } }
     [data-theme="dark"] { --bg: #0a0a0a; --ink: #fafafa; --ink-soft: #a3a3a3; --rule: #1f1f1f; }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Geist', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
     main { max-width: 980px; margin: 0 auto; padding: 64px 20px; }
-    .label, nav { font-family: 'Geist Mono', monospace; font-size: 13px; }
+    .label, nav { font-family: var(--font-mono); font-size: 13px; }
     h1 { font-size: clamp(64px, 14vw, 128px); letter-spacing: -0.05em; margin: 64px 0 16px; }
     p { color: var(--ink-soft); line-height: 1.7; }
     nav { display: flex; flex-wrap: wrap; gap: 24px; border-top: 1px solid var(--rule); margin-top: 32px; padding-top: 24px; }

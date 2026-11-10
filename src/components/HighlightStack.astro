@@ -42,7 +42,7 @@ const { items, lang } = Astro.props;
   .highlight:last-child { border-bottom: none; padding-bottom: 0; }
 
   .num {
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 13px;
     color: var(--accent);
     letter-spacing: 0.04em;
@@ -61,7 +61,7 @@ const { items, lang } = Astro.props;
   }
 
   .tagline {
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 12.5px;
     color: var(--ink-soft);
     line-height: 1.55;
@@ -70,7 +70,7 @@ const { items, lang } = Astro.props;
   }
   /* Chinese tagline reads better in the regular sans face. */
   .highlight[data-lang="zh"] .tagline {
-    font-family: 'Geist', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-body);
     letter-spacing: 0.01em;
   }
 

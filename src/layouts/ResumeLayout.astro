@@ -1,4 +1,5 @@
 ---
+import SiteFonts from '../components/SiteFonts.astro';
 import SearchMetadata from '../components/SearchMetadata.astro';
 // Shared chrome for the resume pages: head, fonts, theme tokens, nav, grid bg, footer.
 // Mirrors the design tokens in src/pages/index.astro so the resume reads as a
@@ -31,9 +32,7 @@ const footerYear = new Date().getFullYear();
   <title>{title}</title>
   <SearchMetadata path={`/resume/${lang}/`} />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <SiteFonts />
 
   <script is:inline>
     // Set theme before paint to avoid FOUC.
@@ -80,12 +79,15 @@ const footerYear = new Date().getFullYear();
     html, body {
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Geist', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
       transition: background 0.4s ease, color 0.4s ease;
     }
 
-    html[lang="zh"] body { letter-spacing: 0.01em; }
+    @media screen {
+      html[lang="zh"] body { letter-spacing: 0; }
+    }
+    @media print { html[lang="zh"] body { letter-spacing: 0.01em; } }
 
     body {
       min-height: 100vh;
@@ -115,7 +117,7 @@ const footerYear = new Date().getFullYear();
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 13px;
       color: var(--ink);
       font-weight: 500;
@@ -133,7 +135,7 @@ const footerYear = new Date().getFullYear();
     }
     .nav-actions { display: flex; gap: 24px; align-items: center; }
     .nav a {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-soft);
       text-decoration: none;
@@ -186,7 +188,7 @@ const footerYear = new Date().getFullYear();
       margin-top: 6px;
     }
     .resume-hero .kicker {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-mute);
       letter-spacing: 0.04em;
@@ -204,7 +206,7 @@ const footerYear = new Date().getFullYear();
       display: flex;
       flex-wrap: wrap;
       gap: 6px 18px;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--ink-soft);
       letter-spacing: 0.01em;
@@ -226,7 +228,7 @@ const footerYear = new Date().getFullYear();
       border-top: 1px solid var(--rule);
     }
     .section h2 {
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       font-weight: 500;
       color: var(--ink-mute);
@@ -248,7 +250,7 @@ const footerYear = new Date().getFullYear();
       border-top: 1px solid var(--rule);
       display: flex;
       justify-content: space-between;
-      font-family: 'Geist Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--ink-mute);
     }
@@ -285,6 +287,18 @@ const footerYear = new Date().getFullYear();
 
     @media (max-width: 360px) {
       .nav-actions { gap: 16px; }
+    }
+
+    @media screen {
+      .resume-hero h1 { line-height: 1.08; letter-spacing: -0.02em; }
+      html[lang="zh"] .resume-hero h1 { letter-spacing: 0; }
+    }
+    @media screen and (max-width: 720px) {
+      /* The portrait only reserves space beside the name. Let dense summaries
+         use the full measure once the reader is below the portrait. */
+      .resume-hero { position: relative; display: block; }
+      .resume-hero__avatar { position: absolute; top: 2px; right: 0; }
+      .resume-hero h1 { padding-right: 100px; }
     }
 
     /* ========== Print: simplified, monochrome, A4-friendly ========== */
