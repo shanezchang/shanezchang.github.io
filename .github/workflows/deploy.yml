@@ -38,15 +38,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Install PDF inspection tools
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y poppler-utils
-      - name: Temporary Linux print comparison
-        if: github.event_name == 'pull_request'
-        run: |
-          git fetch origin main --depth=1
-          mkdir .ci-baseline
-          git archive origin/main | tar -x -C .ci-baseline
-          ln -s "$GITHUB_WORKSPACE/node_modules" .ci-baseline/node_modules
-          (cd .ci-baseline && npm run build)
-          node scripts/diagnose-print.mjs
       - run: npm run test:browser
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

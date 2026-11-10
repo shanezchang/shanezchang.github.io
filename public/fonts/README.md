@@ -16,11 +16,17 @@ its A4 print sizes and page-break rules remain independent.
 | --- | --- | --- |
 | `maple-latin.woff2` | [Maple v7.9 variable WOFF2](https://github.com/subframe7536/maple-font/blob/v7.9/woff2/var/MapleMono%5Bwght%5D-VF.woff2) | 7.900; unmodified, weight axis 100–800; `OFL-Maple.txt` |
 | `maple-cn-{ui,text}-{400,500,600,700}.woff2` | [Maple v7.9 CN release](https://github.com/subframe7536/maple-font/releases/tag/v7.9), `MapleMono-CN-unhinted.zip` | 7.900; static subsets with original copyright/name metadata; `OFL-Maple.txt` |
-| `geist-latin.woff2` | [Google Fonts Geist WOFF2](https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2) | 1.800; unmodified variable Latin subset, 100–900; `OFL-geist.txt` |
-| `geist-mono-latin.woff2` | [Google Fonts Geist Mono WOFF2](https://fonts.gstatic.com/s/geistmono/v6/or3nQ6H-1_WfwkMZI_qYFrcdmhHkjko.woff2) | 1.701; unmodified variable Latin subset, 100–900; `OFL-geistmono.txt` |
+| `geist-latin.woff2` | [Google Fonts Geist WOFF2](https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFU.woff2) | 1.800; unmodified Linux export, variable Latin subset, 100–900; `OFL-geist.txt` |
+| `geist-mono-latin.woff2` | [Google Fonts Geist Mono WOFF2](https://fonts.gstatic.com/s/geistmono/v6/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2) | 1.701; unmodified Linux export, variable Latin subset, 100–900; `OFL-geistmono.txt` |
 
-Geist files are the exact Latin variable files returned by the site's previous
-Google Fonts CSS query, downloaded 2026-11-10. Their OFL texts are from
+Geist files match the current main page's Google Fonts response on Linux,
+verified in the same Actions runner on 2026-11-10. Keep this export's seven-byte
+`prep` table (`SCANCTRL` / `SCANTYPE`). The Mac export has the same glyphs and
+advance data but omits that table; using it in Linux Chromium caused the
+Chinese contact row to wrap and spill the one-page PDF onto a second page.
+Changing only these two resources restored every print element's rectangle
+to the current main baseline, without changing content, font sizes or spacing.
+The family versions are unchanged. Their OFL texts are from
 `google/fonts`' `ofl/geist/OFL.txt` and `ofl/geistmono/OFL.txt`.
 Maple's supplied OFL specifies no Reserved Font Name. Subsetting is the only
 CN modification; no Nerd Fonts or desktop TTFs are shipped.
